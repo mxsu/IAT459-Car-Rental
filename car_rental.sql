@@ -226,7 +226,8 @@ CREATE TABLE `employees` (
 
 INSERT INTO `employees` (`Employee ID`, `First Name`, `Last Name`, `Email`, `Location`) VALUES
 (1234, 'Michael', 'Su', 'MSu@rental.com', 1),
-(4321, 'Owen', 'Chan', 'OChan@rental.com', 2);
+(4321, 'Owen', 'Chan', 'OChan@rental.com', 2),
+(7777, 'John', 'Doe', 'JDoe@rental.com', 2);
 
 -- --------------------------------------------------------
 
