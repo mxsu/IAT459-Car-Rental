@@ -228,6 +228,7 @@ INSERT INTO `employees` (`Employee ID`, `First Name`, `Last Name`, `Email`, `Loc
 (1234, 'Michael', 'Su', 'MSu@rental.com', 1),
 (4321, 'Owen', 'Chan', 'OChan@rental.com', 2);
 (6969, 'Admin', 'Person', 'admin@rental.com', 1);
+(7777, 'John', 'Doe', 'JDoe@rental.com', 2);
 
 -- --------------------------------------------------------
 
