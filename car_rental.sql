@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2025 at 08:21 AM
+-- Generation Time: Mar 20, 2025 at 04:27 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,8 @@ INSERT INTO `admin action` (`Action ID`, `Action Type`) VALUES
 (0, 'Remove Car from Fleet'),
 (1, 'Add Car to Fleet'),
 (2, 'Change Booking Car'),
-(3, 'Change Car Location');
+(3, 'Change Car Location'),
+(4, 'Under Cleaning/Repair');
 
 -- --------------------------------------------------------
 
@@ -52,7 +53,6 @@ CREATE TABLE `admin history` (
   `Action ID` int(11) NOT NULL,
   `Employee ID` int(11) NOT NULL,
   `License Plate` varchar(6) NOT NULL,
-  `Action Type` text NOT NULL,
   `Date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -193,18 +193,19 @@ INSERT INTO `car specifications` (`Car Code`, `Manufacturer`, `Model`, `Body Typ
 
 CREATE TABLE `coverage options` (
   `Coverage_ID` int(11) NOT NULL,
-  `Coverage_Type` varchar(64) NOT NULL
+  `Coverage_Type` varchar(64) NOT NULL,
+  `Day Price` decimal(6,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `coverage options`
 --
 
-INSERT INTO `coverage options` (`Coverage_ID`, `Coverage_Type`) VALUES
-(0, 'No Coverage'),
-(1, 'Basic Liability'),
-(3, 'Full Coverage'),
-(2, 'Liability + Collision');
+INSERT INTO `coverage options` (`Coverage_ID`, `Coverage_Type`, `Day Price`) VALUES
+(0, 'No Coverage', 0.00),
+(1, 'Basic Liability', 50.00),
+(2, 'Liability + Collision', 100.00),
+(3, 'Full Coverage', 150.00);
 
 -- --------------------------------------------------------
 
@@ -214,6 +215,7 @@ INSERT INTO `coverage options` (`Coverage_ID`, `Coverage_Type`) VALUES
 
 CREATE TABLE `employees` (
   `Employee ID` int(11) NOT NULL,
+  `Hashed Password` varchar(64) NOT NULL,
   `First Name` varchar(32) NOT NULL,
   `Last Name` varchar(32) NOT NULL,
   `Email` varchar(32) NOT NULL,
@@ -224,10 +226,9 @@ CREATE TABLE `employees` (
 -- Dumping data for table `employees`
 --
 
-INSERT INTO `employees` (`Employee ID`, `First Name`, `Last Name`, `Email`, `Location`) VALUES
-(1234, 'Michael', 'Su', 'MSu@rental.com', 1),
-(4321, 'Owen', 'Chan', 'OChan@rental.com', 2),
-(7777, 'John', 'Doe', 'JDoe@rental.com', 2);
+INSERT INTO `employees` (`Employee ID`, `Hashed Password`, `First Name`, `Last Name`, `Email`, `Location`) VALUES
+(1234, '', 'Michael', 'Su', 'MSu@rental.com', 1),
+(4321, '', 'Owen', 'Chan', 'OChan@rental.com', 2);
 
 -- --------------------------------------------------------
 
@@ -237,6 +238,7 @@ INSERT INTO `employees` (`Employee ID`, `First Name`, `Last Name`, `Email`, `Loc
 
 CREATE TABLE `members` (
   `Email` varchar(32) NOT NULL,
+  `Hashed Password` varchar(64) NOT NULL,
   `Phone Number` varchar(20) NOT NULL,
   `First Name` varchar(32) NOT NULL,
   `Last Name` varchar(32) NOT NULL
@@ -246,9 +248,9 @@ CREATE TABLE `members` (
 -- Dumping data for table `members`
 --
 
-INSERT INTO `members` (`Email`, `Phone Number`, `First Name`, `Last Name`) VALUES
-('michael@gmail.com', '6041234321', 'Michael', 'Soo'),
-('owen@gmail.com', '7781234321', 'Owen', 'Chen');
+INSERT INTO `members` (`Email`, `Hashed Password`, `Phone Number`, `First Name`, `Last Name`) VALUES
+('michael@gmail.com', '', '6041234321', 'Michael', 'Soo'),
+('owen@gmail.com', '', '7781234321', 'Owen', 'Chen');
 
 -- --------------------------------------------------------
 
@@ -390,6 +392,12 @@ ALTER TABLE `car`
 --
 ALTER TABLE `car specifications`
   ADD PRIMARY KEY (`Car Code`);
+
+--
+-- Indexes for table `coverage options`
+--
+ALTER TABLE `coverage options`
+  ADD PRIMARY KEY (`Coverage_ID`);
 
 --
 -- Indexes for table `employees`
