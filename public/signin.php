@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = $_POST['email'];
         //$password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
-        $stmt = $conn->prepare("INSERT INTO users (Email, Password) VALUES (?, ?)");
+        $stmt = $conn->prepare("INSERT INTO members (Email, Password) VALUES (?, ?)");
         $stmt->bind_param("ss", $email, $password);
 
         if ($stmt->execute()) {
@@ -36,8 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
 
-        if ($user && password_verify($password, $user['Password'])) {
+        if ($user && $password = $user['Password']) {
             $message = "Login successful! Welcome, " . htmlspecialchars($email);
+            header("Location: profile.php");
+            exit();
         } else {
             $message = "Invalid email or password.";
         }
