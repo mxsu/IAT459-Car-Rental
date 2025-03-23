@@ -11,33 +11,7 @@ if (!$conn) {
 }
 echo "Connected successfully";
 
-$car_query = "SELECT Manufacturer, Model, `Body Type`, `Drive Train`,`Fuel Type`, Seating FROM `car specifications`";
-    $result = mysqli_query($conn, $car_query);
 
-    if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            // no need for backticks when selecting rows, only in sql query
-            echo '
-            <div class="right-content">
-                <div class="card">
-                    <img src="../images/toyota-corolla-sedan-2019-520018.jpg " alt="Card Image">
-                    <div class="card-content">
-                        <h2 class="card-title">' . $row["Manufacturer"] ." ". $row["Model"]. '</h2>
-                        <p class="card-text">' . $row["Body Type"] . '</p>
-                        <p class="card-text-small">' .$row["Drive Train"] .$row["Fuel Type"] .$row["Seating"] . '</p> 
-                    </div>
-                    <div class="card-button-section">
-                        <div class="card-text">Price</div>
-                        <div class="card-title">$' . number_format($row["price"], 2) . '</div>
-                        <button type="button" class="card-button" onclick="redirectToDetailPage(this)" data-body-type="Car">Pay Now</button>
-                    </div>
-                </div>
-            </div>
-            ';
-        }
-    } else {
-        echo "No cars available.";
-    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -106,20 +80,42 @@ $car_query = "SELECT Manufacturer, Model, `Body Type`, `Drive Train`,`Fuel Type`
             </form>
         </div>
         <div class="right-content">
+            <?php
+            require('../includes/connect-db.php');
 
-            <div class="card">
-                <img src="../images/toyota-corolla-sedan-2019-520018.jpg" alt="Card Image">
-                <div class="card-content">
-                    <h2 class="card-title">Card Title</h2>
-                    <p class="card-text">Testing</p>
-                    <p class="card-text-small">Gasoline 5 Seat FWD</p>
-                </div>
-                <div class="card-button-section">
-                    <div class="card-text">Price</div>
-                    <div class="card-title">$69.55</div>
-                    <button type=button class="card-button" onclick="redirectToDetailPage(this)" data-body-type="Car">Pay Now</button>
-                </div>
-            </div>
+            // Create connection
+            $conn = mysqli_connect($servername, $username, $password, $db);
+
+            // Check connection
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+            // echo "Connected successfully";
+
+            $car_query = "SELECT Manufacturer, Model, `Body Type`, `Drive Train`, `Fuel Type`, Seating FROM `car specifications`";
+            $result = mysqli_query($conn, $car_query);
+
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) { ?>
+                    <div class="card">
+                        <img src="../images/toyota-corolla-sedan-2019-520018.jpg" alt="Card Image">
+                        <div class="card-content">
+                            <h2 class="card-title"><?= $row["Manufacturer"] . " " . $row["Model"] ?></h2>
+                            <p class="card-text"><?= $row["Body Type"] ?></p>
+                            <p class="card-text-small"><?= $row["Drive Train"] . " " . $row["Fuel Type"] . " " . $row["Seating"] . " Seats" ?></p>
+                        </div>
+                        <div class="card-button-section">
+                            <div class="card-text">Price</div>
+                            <div class="card-title">$69.95</div> 
+                            <!-- change to actual price later -->
+                            <button type="button" class="card-button" onclick="redirectToDetailPage(this)" data-body-type="Car">Pay Now</button>
+                        </div>
+                    </div>
+                <?php }
+            } else { ?>
+                <p>No cars available.</p>
+            <?php }
+            mysqli_close($conn); ?>
         </div>
     </div>
     <script src="../JS/jquery.js"></script>
