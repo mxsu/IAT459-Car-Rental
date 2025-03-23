@@ -13,8 +13,8 @@
 
 body,
 html {
-  margin: 0; /* Remove default body margin */
-  padding: 3em; /* Remove default padding */
+  margin: -2em; /* Remove default body margin */
+  padding: 0; /* Remove default padding */
   height: 100%; /* Make sure the body takes the full height */
 }
 
