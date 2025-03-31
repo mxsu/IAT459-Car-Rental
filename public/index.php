@@ -1,12 +1,5 @@
 <?php
-session_start();
 
-if (isset($_SESSION["user_id"])) {
-    $mysqli = require("../includes/connect-db.php");
-    $sql = "SELECT * FROM user WHERE user_id = {$_SESSION["user_id"]}";
-    $result = $mysqli->query($sql);
-    $user = $result->fetch_assoc();
-}
 
 ?>
 
@@ -20,24 +13,12 @@ if (isset($_SESSION["user_id"])) {
 
     <title>Marine Drive Rental</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
+    <?php
+    include("../includes/navbar.php");
+    ?>
 </head>
-<?php
-$isSignedIn = isset($user); // Assuming session is used to track signed-in users
-?>
-<nav>
-    <ul style="list-style-type: none; margin: 0; padding: 0; overflow: hidden; background-color: #333;">
-        <li style="float: left;">
-            <a href="index.php" style="display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Home</a>
-        </li>
-        <li style="float: right;">
-            <?php if ($isSignedIn): ?>
-                <a href="profile.php" style="display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Profile</a>
-            <?php else: ?>
-                <a href="login.php" style="display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Sign In</a>
-            <?php endif; ?>
-        </li>
-    </ul>
-</nav>
+
+
 
 <body>
     <h1>Welcome to Marine Drive Rental</h1>
@@ -64,5 +45,8 @@ $isSignedIn = isset($user); // Assuming session is used to track signed-in users
         <button type="submit">Search</button>
     </form>
 </body>
+<?php
+include("../includes/footer.php");
+?>
 
 </html>
