@@ -12,6 +12,9 @@ unset($_SESSION["form_data"]); // Remove session after using
     <title>Sign Up</title>
     <!-- <link rel="stylesheet" href="styles.css"> Link to your CSS file -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
+    <?php
+    include("../includes/navbar.php");
+    ?>
 </head>
 
 <body>
