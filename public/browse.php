@@ -9,7 +9,9 @@ $conn = mysqli_connect($servername, $username, $password, $db);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
+
 // echo "Connected successfully";
+
 
 
 ?>
@@ -20,8 +22,10 @@ if (!$conn) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Browse Cars</title>
-    <link rel="stylesheet" href="../css/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
+
 </head>
 <nav>
     <ul style="list-style-type: none; margin: 0; padding: 0; overflow: hidden; background-color: #333;">
