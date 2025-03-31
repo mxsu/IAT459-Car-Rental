@@ -9,7 +9,7 @@ $conn = mysqli_connect($servername, $username, $password, $db);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
-echo "Connected successfully";
+// echo "Connected successfully";
 
 
 ?>
@@ -92,13 +92,25 @@ echo "Connected successfully";
             }
             // echo "Connected successfully";
 
-            $car_query = "SELECT Manufacturer, Model, `Body Type`, `Drive Train`, `Fuel Type`, Seating FROM `car specifications`";
+            $car_query = "SELECT Manufacturer, Model, `Body Type`, `Drive Train`, `Fuel Type`, Seating, `Car Code` FROM `car specifications`";
             $result = mysqli_query($conn, $car_query);
 
             if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) { ?>
+                while ($row = mysqli_fetch_assoc($result)) { 
+                    $image_path = ""; //empty image path
+
+                    
+                    if (strpos($row['Car Code'], "Toyota_Corolla") !== false) {
+                        $image_path = "../images/toyota-corolla-sedan-2019-520018.jpg";
+                    } elseif (strpos($row['Car Code'], "Toyota_Prius") !== false) {
+                        $image_path = "../images/prius.jpg";
+                    } else {
+                        $image_path = "../images/default-car.jpg"; 
+                    }
+        
+                    ?>
                     <div class="card">
-                        <img src="../images/toyota-corolla-sedan-2019-520018.jpg" alt="Card Image">
+                        <img src="<?= $image_path ?>" alt="Card Image">
                         <div class="card-content">
                             <h2 class="card-title"><?= $row["Manufacturer"] . " " . $row["Model"] ?></h2>
                             <p class="card-text"><?= $row["Body Type"] ?></p>
