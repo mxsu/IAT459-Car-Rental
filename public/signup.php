@@ -10,8 +10,6 @@ unset($_SESSION["form_data"]); // Remove session after using
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <!-- <link rel="stylesheet" href="styles.css"> Link to your CSS file -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
     <?php
     include("../includes/navbar.php");
     ?>
