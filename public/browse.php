@@ -11,6 +11,10 @@ if (!$conn) {
 }
 
 
+// echo "Connected successfully";
+
+
+
 
 ?>
 <!DOCTYPE html>
@@ -28,6 +32,7 @@ if (!$conn) {
 
 
 <body>
+
 
     <h1>Welcome to the Marine Drive Rentals</h1>
     <?php
@@ -48,9 +53,16 @@ if (!$conn) {
     }
 
     ?>
+    <h1>Welcome to Marine Drive Rentals</h1>
+
     <p>Browse our selection of cars below.</p>
+
     <h2>Filter Cars</h2>
     <div class="container">
+
+
+        <!-- Filters Section -->
+
         <div class="left-filter">
             <form id="filter-form">
                 <!-- Car Body Type -->
@@ -62,7 +74,10 @@ if (!$conn) {
                 <input type="checkbox" id="truck" name="body_type[]" value="Truck">
                 <label for="truck"> Truck </label><br>
                 <input type="checkbox" id="van" name="body_type[]" value="Van">
-                <label for="va"> Van </label><br>
+
+
+                <label for="van"> Van </label><br>
+
 
                 <!-- Fuel Type -->
                 <h3>Fuel Type</h3>
@@ -84,29 +99,44 @@ if (!$conn) {
                 <input type="checkbox" id="seats6+" name="seats[]" value="6+">
                 <label for="seats6+"> 6+ </label><br>
 
-                <br>
                 <!-- Submit Button -->
                 <button type="submit">Apply Filters</button>
             </form>
         </div>
+        <!-- Cars Section -->
         <div class="right-content">
 
-            <div class="card">
-                <img src="../images/toyota-corolla-sedan-2019-520018.jpg" alt="Card Image">
-                <div class="card-content">
-                    <h2 class="card-title">Card Title</h2>
-                    <p class="card-text">Testing</p>
-                    <p class="card-text-small">Gasoline 5 Seat FWD</p>
-                </div>
-                <div class="card-button-section">
-                    <div class="card-text">Price</div>
-                    <div class="card-title">$69.55</div>
-                    <button type=button class="card-button" onclick="redirectToDetailPage(this)"
-                        data-body-type="Car">Pay Now</button>
-                </div>
-            </div>
+
+          
+            <p>Loading cars...</p> 
+
         </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            // Handling form submission with AJAX
+            $("#filter-form").submit(function (event) {
+                event.preventDefault(); 
+
+                // Serialize form data
+                let formData = $(this).serialize();
+
+                // Send AJAX request
+                $.ajax({
+                    type: "POST",
+                    url: "filter-cars.php",
+                    data: formData,
+                    success: function (response) {
+                        $(".right-content").html(response); 
+                    },
+                    error: function () {
+                        alert("Failed to retrieve cars. Please try again.");
+                    }
+                });
+            });
+        });
+    </script>
     <script src="../JS/jquery.js"></script>
 </body>
 

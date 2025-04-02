@@ -6,5 +6,5 @@ Technologies Used
 Backend: PHP, MySQL
 Frontend: HTML, CSS, JavaScript, AJAX, JQuery
 Server: XAMPP (Apache & MySQL)
-Version Control: Git & GitHub
+Version Control: GitHub
 ```
