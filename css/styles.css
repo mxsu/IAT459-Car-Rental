@@ -13,7 +13,7 @@
 
 body,
 html {
-  margin: -2em; /* Remove default body margin */
+  margin: 0em; /* Remove default body margin */
   padding: 0; /* Remove default padding */
   height: 100%; /* Make sure the body takes the full height */
 }
@@ -25,6 +25,37 @@ html {
   gap: 10px; /* Space between columns */
   height: 100vh; /* Full viewport height */
   overflow-x: hidden;
+}
+
+.grid-container {
+  display: grid;
+  gap: 20px;
+}
+
+.column-50-50 .grid-container {
+  grid-template-columns: 49% 49%;
+}
+
+.column-30-70 .grid-container {
+  grid-template-columns: 30% 70%;
+}
+
+.grid-item {
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+}
+
+.item-inner {
+  width: 90%;
+  height: 90%;
+  background-color: white;
+  padding: 15px;
+  text-align: left;
+  border: 1px solid black;
 }
 
 /* Left column styles */
@@ -234,16 +265,6 @@ input[type="checkbox"]:checked + label::after {
   margin-right: 10px;
 }
 
-.checkout-container {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow around the box */
-  padding: 20px;
-  width: 100%;
-  max-width: 400px; /* Maximum width for the form box */
-  margin: 20px;
-  height: auto;
-}
 /* Navigation Bar Styles */
 .navbar {
   display: flex;
@@ -281,4 +302,28 @@ input[type="checkbox"]:checked + label::after {
 
 .navbar ul li a:hover {
   color: var(--secondary-color);
+}
+
+/* Style the suggestion box */
+.autocomplete-items {
+  position: absolute;
+  background-color: var(--secondary-color);
+  border: 0px solid #ddd;
+  max-height: 150px;
+  overflow-y: auto;
+  width: calc(100% - 20px); /* Make it the same width as the input box */
+  z-index: 1000;
+  box-sizing: border-box;
+  margin-top: 2px;
+}
+
+/* Style each suggestion */
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Highlight suggestion on hover */
+.autocomplete-items div:hover {
+  background-color: #e9e9e9;
 }

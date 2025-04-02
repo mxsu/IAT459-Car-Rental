@@ -10,6 +10,8 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,8 +21,6 @@ if (!$conn) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Browse Cars</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
     <?php
     include("../includes/navbar.php");
     ?>
@@ -28,11 +28,29 @@ if (!$conn) {
 
 
 <body>
+
     <h1>Welcome to the Marine Drive Rentals</h1>
+    <?php
+    if (isset($_SESSION["location"])) {
+        echo "Location: " . htmlspecialchars($_SESSION["location"]) . nl2br("\n");
+    } else {
+        echo "Location is not set in the session.";
+    }
+    if (isset($_SESSION["start-date"])) {
+        echo "Pickup Date: " . htmlspecialchars($_SESSION["start-date"]) . nl2br("\n");
+    } else {
+        echo "start-date is not set in the session.";
+    }
+    if (isset($_SESSION["end-date"])) {
+        echo "Return Date: " . htmlspecialchars($_SESSION["end-date"]) . nl2br(" \n");
+    } else {
+        echo "end-date is not set in the session.";
+    }
+
+    ?>
     <p>Browse our selection of cars below.</p>
     <h2>Filter Cars</h2>
     <div class="container">
-
         <div class="left-filter">
             <form id="filter-form">
                 <!-- Car Body Type -->
@@ -44,7 +62,7 @@ if (!$conn) {
                 <input type="checkbox" id="truck" name="body_type[]" value="Truck">
                 <label for="truck"> Truck </label><br>
                 <input type="checkbox" id="van" name="body_type[]" value="Van">
-                <label for="vab"> Van </label><br>
+                <label for="va"> Van </label><br>
 
                 <!-- Fuel Type -->
                 <h3>Fuel Type</h3>
@@ -83,7 +101,8 @@ if (!$conn) {
                 <div class="card-button-section">
                     <div class="card-text">Price</div>
                     <div class="card-title">$69.55</div>
-                    <button type=button class="card-button" onclick="redirectToDetailPage(this)" data-body-type="Car">Pay Now</button>
+                    <button type=button class="card-button" onclick="redirectToDetailPage(this)"
+                        data-body-type="Car">Pay Now</button>
                 </div>
             </div>
         </div>

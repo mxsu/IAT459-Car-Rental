@@ -11,6 +11,15 @@ if (!$conn) {
 }
 echo "Connected successfully";
 
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $_SESSION['body_type'] = $_POST['body_type'];
+    $_SESSION['fuel_type'] = $_POST['fuel_type'];
+    $_SESSION['seats'] = $_POST['seats'];
+    $_SESSION[''] = $_POST[''];
+}
+
+
 $bodyType = $_GET['body_type'];
 
 // Prepare the SQL query to fetch the first car of the specified body type
@@ -44,8 +53,6 @@ $car = mysqli_fetch_assoc($result);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Browse Cars</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
     <?php
     include("../includes/navbar.php");
     ?>
@@ -53,9 +60,8 @@ $car = mysqli_fetch_assoc($result);
 
 <body>
 
-    <div class="container">
-
-        <div class="car-select">
+    <div class="">
+        <div class="">
             <?php if ($car) {
                 // Display the car details
                 echo "<div class='car-details'>";
@@ -63,22 +69,25 @@ $car = mysqli_fetch_assoc($result);
                 echo "<h2>" . htmlspecialchars($car['Model']) . "</h2>";
                 echo "<p>Seats: " . htmlspecialchars($car['Seating']) . "</p>";
                 echo "<p>Fuel Type: " . htmlspecialchars($car['Fuel Type']) . "</p>";
-                echo "<p><a href='reserve.php?id=" . $car['id'] . "'>Reserve this car</a></p>";
+
                 echo "</div>";
             } else {
                 echo "<p>No cars found for the selected body type.</p>";
             }
             ?>
         </div>
-        <div class="insurance-select">
-            <input type="checkbox" id="no" name="coverage[]" value="0">
-            <label for="no"> No Coverage </label><br>
-            <input type="checkbox" id="basic" name="coverage[]" value="0">
-            <label for="basic"> Basic </label><br>
-            <input type="checkbox" id="full" name="coverage[]" value="0">
-            <label for="full"> Full </label><br>
+
+        <div class="left-filter">
+            <form action="../includes/detail-process.php" method="post" id="filter-form">
+                <input type="checkbox" id="no" name="coverage[]" value="0">
+                <label for="no"> No Coverage </label><br>
+                <input type="checkbox" id="basic" name="coverage[]" value="1">
+                <label for="basic"> Basic </label><br>
+                <input type="checkbox" id="full" name="coverage[]" value="2">
+                <label for="full"> Full </label><br>
+                <button type="submit">Reserve</button>
+            </form>
         </div>
-    </div>
     </div>
 </body>
 
