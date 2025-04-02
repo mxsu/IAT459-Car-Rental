@@ -2,7 +2,11 @@
     <nav>
         <ul>
             <li><a href="/IAT459-Car-Rental/index.php">Home</a></li>
-            <li><a href="/IAT459-Car-Rental/signin.php">Sign In</a></li>
+            <?php if ($isSignedIn): ?>
+                <li><a href="/IAT459-Car-Rental/profile.php">Profile</a></li>
+            <?php else: ?>
+                <li><a href="/IAT459-Car-Rental/signin.php">Sign In</a></li>
+            <?php endif; ?>
         </ul>
     </nav>
     </ul>
