@@ -1,5 +1,4 @@
 <?php
-
 require('../includes/connect-db.php');
 
 // Create connection
@@ -13,26 +12,32 @@ echo "Connected successfully";
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $_SESSION['body_type'] = $_POST['body_type'];
-    $_SESSION['fuel_type'] = $_POST['fuel_type'];
-    $_SESSION['seats'] = $_POST['seats'];
-    $_SESSION[''] = $_POST[''];
+    $_SESSION['car-code'] = $_POST['carCode'];
+    $_SESSION['manufacturer'] = $_POST['manufacturer'];
+    $_SESSION['model'] = $_POST['model'];
+    $_SESSION['body-type'] = $_POST['bodyType'];
+    $_SESSION['price'] = $_POST['price'];
+    $_SESSION['seating'] = $_POST['seating'];
+} else {
+    echo " No POST data received from filter-cars.php.";
 }
 
 
-$bodyType = $_GET['body_type'];
+$carCode = $_POST['car-code'];
 
 // Prepare the SQL query to fetch the first car of the specified body type
-$query = "SELECT * FROM `car` c 
-JOIN `car specifications` cs ON c.`Car Code` = cs.`Car Code` 
-WHERE cs.`body type` = ? LIMIT 1";
+// $query = "SELECT * FROM `car` c 
+// JOIN `car specifications` cs ON c.`Car Code` = cs.`Car Code` 
+// WHERE cs.`Car Code` = ? LIMIT 1";
+
+$query = "SELECT * FROM `car specifications` WHERE `Car Code` = ? LIMIT 1";
 
 
 // Initialize the prepared statement
 $stmt = mysqli_prepare($conn, $query);
 
 // Bind the parameter (body_type)
-mysqli_stmt_bind_param($stmt, "s", $bodyType);
+mysqli_stmt_bind_param($stmt, "s", $carCode);
 
 // Execute the statement
 mysqli_stmt_execute($stmt);
@@ -72,19 +77,22 @@ $car = mysqli_fetch_assoc($result);
 
                 echo "</div>";
             } else {
-                echo "<p>No cars found for the selected body type.</p>";
+                echo "<p>No cars found for the selected car Code.</p>";
             }
             ?>
         </div>
 
         <div class="left-filter">
             <form action="../includes/detail-process.php" method="post" id="filter-form">
-                <input type="checkbox" id="no" name="coverage[]" value="0">
+                <input type="radio" id="no" name="coverage" value="0">
                 <label for="no"> No Coverage </label><br>
-                <input type="checkbox" id="basic" name="coverage[]" value="1">
+
+                <input type="radio" id="basic" name="coverage" value="1">
                 <label for="basic"> Basic </label><br>
-                <input type="checkbox" id="full" name="coverage[]" value="2">
+
+                <input type="radio" id="full" name="coverage" value="2">
                 <label for="full"> Full </label><br>
+
                 <button type="submit">Reserve</button>
             </form>
         </div>

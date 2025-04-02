@@ -30,47 +30,94 @@
     ?>
 
 
+    <div class="grid-container">
+        <div class="grid-50">
+            <h3>Car Details</h3>
 
-    <form action="../includes/reserve-process.php" method="post">
-        <h3>Enter Your Details</h3>
-        <label for="first_name">First Name:</label>
-        <input type="text" id="first_name" name="first_name" value="<?php echo isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first_name']) : ''; ?>" required>
-        <br>
-        <label for="last_name">Last Name:</label>
-        <input type="text" id="last_name" name="last_name" required>
-        <br>
-        <!-- <label for="phone_number">Phone Number:</label>
+            <!-- 
+            The car data should come from the jquery AJAX request in the filter-cars.php file.
+            The other stuff should be in the session variables.
+            -->
+            <p>Car Code:
+                <?php echo htmlspecialchars($car['Car Code']); ?>
+            </p>
+            <p>Manufacturer:
+                <!-- <?php echo htmlspecialchars($car['Manufacturer']); ?> -->
+            </p>
+            <p>Model:
+                <!-- <?php echo htmlspecialchars($car['Model']); ?> -->
+            </p>
+            <p>Seating:
+                <!-- <?php echo htmlspecialchars($car['Seating']); ?> -->
+            </p>
+            <p>Fuel Type:
+                <!-- <?php echo htmlspecialchars($car['Fuel Type']); ?> -->
+            </p>
+            <p>Price:
+                <!-- <?php echo htmlspecialchars($car['Price']); ?> -->
+            </p>
+            <p>Pickup Date:
+                <!-- <?php echo htmlspecialchars($_SESSION['start-date']); ?> -->
+            <p>Return Date:
+                <!-- <?php echo htmlspecialchars($_SESSION['end-date']); ?> -->
+            </p>
+            <p>Location:
+                <!-- <?php echo htmlspecialchars($_SESSION['location']); ?> -->
+            </p>
+            <p>
+                Insurance:
+                <!-- <?php echo htmlspecialchars($_SESSION['insurance']); ?> -->
+            </p>
+            <p>
+                Insurance Price:
+                <!-- <?php echo htmlspecialchars($_SESSION['insurance-price']); ?> -->
+            </p>
+            <p>
+                Total Price:
+                <!-- <?php echo htmlspecialchars($_SESSION['total-price']); ?> -->
+            </p>
+        </div>
+        <div class="grid-50">
+            <form action="../includes/reserve-process.php" method="post">
+                <h3>Enter Your Details</h3>
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" value="<?php echo isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first_name']) : ''; ?>" required>
+
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" required>
+
+                <!-- <label for="phone_number">Phone Number:</label>
         <input type="tel" id="phone_number" name="phone_number" required>
         <br> -->
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br>
-        <!-- <button type="submit">Proceed to Checkout</button> -->
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <br>
+                <!-- <button type="submit">Proceed to Checkout</button> -->
 
-        <h3>Payment Details</h3>
-        <label for="card_name">Name on Card:</label>
-        <input type="text" id="card_name" name="card_name" required>
-        <br>
-        <label for="card_number">Card Number:</label>
-        <input type="text" id="card_number" name="card_number" pattern="\d{16}" maxlength="16" required>
-        <br>
-        <label for="expiry_date">Expiry Date:</label>
-        <input type="month" id="expiry_date" name="expiry_date" required>
-        <br>
-        <label for="cvv">CVV:</label>
-        <input type="text" id="cvv" name="cvv" pattern="\d{3}" maxlength="3" required>
-        <br>
-        <!-- <button type="submit">Submit Payment</button> -->
+                <h3>Payment Details</h3>
+                <label for="card_name">Name on Card:</label>
+                <input type="text" id="card_name" name="card_name" required>
 
-        <label>
-            <input type="checkbox"> Terms and conditions
-        </label>
-        <p>By checking this box, you agree to our terms and conditions, including our privacy policy and rental agreement.</p>
-        <br>
-        <button type="submit">Reserve</button>
-    </form>
+                <label for="card_number">Card Number:</label>
+                <input type="text" id="card_number" name="card_number" pattern="\d{16}" maxlength="16" required>
 
-    <a href="booking-confirmation.php" class="button">Next Page</a>
+                <label for="expiry_date">Expiry Date:</label>
+                <input type="month" id="expiry_date" name="expiry_date" required>
+
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" name="cvv" pattern="\d{3}" maxlength="3" required>
+
+                <!-- <button type="submit">Submit Payment</button> -->
+                <br>
+                <label>
+                    <input type="checkbox"> Terms and conditions
+                </label>
+
+                <p>By checking this box, you agree to our terms and conditions, including our privacy policy and rental agreement.</p>
+                <br>
+                <button type="submit">Reserve</button>
+            </form>
+        </div>
 
 </body>
 

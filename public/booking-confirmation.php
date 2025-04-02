@@ -21,7 +21,7 @@
         <li><strong>First Name:</strong> <?= htmlspecialchars($_SESSION['first_name']) ?></li>
         <li><strong>Last Name:</strong> <?= htmlspecialchars($_SESSION['last_name']) ?></li>
         <li><strong>Email:</strong> <?= htmlspecialchars($_SESSION['email']) ?></li>
-        <li><strong>Car Model:</strong> <?= htmlspecialchars($_SESSION['car_model']) ?></li>
+        <li><strong>Car Model:</strong> <?= htmlspecialchars($_SESSION['car-code']) ?></li>
         <li><strong>Location:</strong> <?= htmlspecialchars($_SESSION['location']) ?></li>
         <li><strong>Pick Up Date:</strong> <?= htmlspecialchars($_SESSION['start-date']) ?></li>
         <li><strong>Return Date:</strong> <?= htmlspecialchars($_SESSION['end-date']) ?></li>
