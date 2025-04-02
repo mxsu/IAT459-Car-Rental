@@ -11,7 +11,7 @@ if (!$conn) {
 echo "Connected Successfully";
 
 // Start base query
-$query = "SELECT Manufacturer, Model, `Body Type`, `Drive Train`, `Fuel Type`, Seating, `Car Code` FROM `car specifications` WHERE 1=1";
+$query = "SELECT Manufacturer, Model, `Body Type`, `Drive Train`, `Fuel Type`, Seating, `Car Code`, `daily_price` FROM `car specifications` WHERE 1=1";
 
 // Add filters based on user input
 if (isset($_POST['body_type']) && !empty($_POST['body_type'])) {
@@ -49,6 +49,10 @@ if (mysqli_num_rows($result) > 0) {
             $image_path = "../images/prius.jpg";
         }elseif (strpos($row['Car Code'], "Ford_Mustang") !== false) {
             $image_path = "../images/mustang.jpg";
+        }elseif (strpos($row['Car Code'], "Dodge_Caravan") !== false) {
+            $image_path = "../images/dodge_caravan.jpg";
+        }elseif (strpos($row['Car Code'], "Toyota_Sienna") !== false) {
+            $image_path = "../images/toyota_sienna.png";
         }
 
         echo "
@@ -61,7 +65,7 @@ if (mysqli_num_rows($result) > 0) {
             </div>
             <div class='card-button-section'>
                         <div class='card-text'>Price</div>
-                        <div class='card-title'>$69.95</div> 
+                        <div class='card-title'>{$row["daily_price"]}</div> 
                         <!-- change to actual price later -->
                         <button type='button' class='card-button' onclick='redirectToDetailPage(this)' data-body-type='Car'>Pay Now</button>
                     </div>
