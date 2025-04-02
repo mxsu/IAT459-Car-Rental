@@ -23,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             session_regenerate_id();
 
             $_SESSION["user_id"] = $user["user_id"];
+            $_SESSION["email"] = $user["email"];
             header("Location: index.php");
             exit;
         }
@@ -40,7 +41,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
-    <link rel="stylesheet" href="styles.css"> Link to your CSS file
+    <?php
+    include("../includes/navbar.php");
+    ?>
 </head>
 
 <body>
