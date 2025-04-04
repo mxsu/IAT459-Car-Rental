@@ -107,33 +107,37 @@ if (!$conn) {
         <div class="right-content">
 
 
-          
-            <p>Loading cars...</p> 
+
+            <p>Loading cars...</p>
 
         </div>
     </div>
 
     <script>
-        $(document).ready(function () {
-            // Handling form submission with AJAX
-            $("#filter-form").submit(function (event) {
-                event.preventDefault(); 
+        $(document).ready(function() {
+            function fetchCars(limit = 4) {
+                let formData = $("#filter-form").serialize() + "&limit=" + limit;
 
-                // Serialize form data
-                let formData = $(this).serialize();
-
-                // Send AJAX request
                 $.ajax({
                     type: "POST",
                     url: "filter-cars.php",
                     data: formData,
-                    success: function (response) {
-                        $(".right-content").html(response); 
+                    success: function(response) {
+                        $(".right-content").html(response);
                     },
-                    error: function () {
+                    error: function() {
                         alert("Failed to retrieve cars. Please try again.");
                     }
                 });
+            }
+
+            // Fetch cars on page load
+            fetchCars();
+
+            // Fetch cars when form is submitted
+            $("#filter-form").submit(function(event) {
+                event.preventDefault(); // Prevent form from reloading the page
+                fetchCars();
             });
         });
     </script>

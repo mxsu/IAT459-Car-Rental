@@ -1,12 +1,27 @@
 $(document).ready(function () {
   // Event delegation method
   $(document).on("click", ".card-button", function () {
-    const bodyType = $(this).data("body-type");
-    console.log("Body Type:", bodyType); // For debugging
-
-    if (bodyType) {
-      window.location.href = `detail.php?body_type=${bodyType}`;
-    }
+    const carData = {
+      manufacturer: $(this).data("manufacturer"),
+      model: $(this).data("model"),
+      bodyType: $(this).data("body-type"),
+      price: $(this).data("price"),
+      carCode: $(this).data("car-code"),
+      seating: $(this).data("seating"),
+    };
+    console.log("Car Data:", carData); // For debugging
+    $.ajax({
+      type: "POST",
+      url: "detail.php", // Path to PHP file that processes the session saving
+      data: carData, // Send the car data in the POST request
+      success: function (response) {
+        console.log("Session saved:", response);
+        window.location.href = "detail.php"; // Redirect to detail page
+      },
+      error: function () {
+        alert("Failed to save car data to session. Please try again.");
+      },
+    });
   });
 });
 
