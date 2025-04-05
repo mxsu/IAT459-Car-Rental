@@ -60,6 +60,7 @@ if (!empty($_POST['seats'])) {
 }
 
 // Add LIMIT and OFFSET
+$query .= "GROUP BY cs.`Car Code`";
 $query .= "ORDER BY cs.`Car Code` ASC"; // Order by Car Code
 $query .= " LIMIT $limit OFFSET $offset";
 
