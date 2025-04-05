@@ -34,7 +34,8 @@ echo "Connected Successfully";
     <div class="grid-container">
         <div class="grid-25">
             <h3>Profile Settings</h3>
-
+            <br>
+            Name, Driver License,
 
 
 

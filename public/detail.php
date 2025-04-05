@@ -1,6 +1,5 @@
 <?php
 require('../includes/connect-db.php');
-
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $db);
 
@@ -12,18 +11,13 @@ echo "Connected successfully";
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $_SESSION['car-code'] = $_POST['carCode'];
-    $_SESSION['manufacturer'] = $_POST['manufacturer'];
-    $_SESSION['model'] = $_POST['model'];
-    $_SESSION['body-type'] = $_POST['bodyType'];
-    $_SESSION['price'] = $_POST['price'];
-    $_SESSION['seating'] = $_POST['seating'];
+    $_SESSION['car-code'] = $_POST['car-code'];
 } else {
     echo " No POST data received from filter-cars.php.";
 }
+echo $_SESSION['car-code'];
 
-
-$carCode = $_POST['car-code'];
+$carCode = $_SESSION['car-code'];
 
 // Prepare the SQL query to fetch the first car of the specified body type
 // $query = "SELECT * FROM `car` c 
@@ -69,7 +63,6 @@ $car = mysqli_fetch_assoc($result);
         <div class="">
             <?php if ($car) {
                 // Display the car details
-                echo "<div class='car-details'>";
                 echo "<h2>" . htmlspecialchars($car['Manufacturer']) . "</h2>";
                 echo "<h2>" . htmlspecialchars($car['Model']) . "</h2>";
                 echo "<p>Seats: " . htmlspecialchars($car['Seating']) . "</p>";

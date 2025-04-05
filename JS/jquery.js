@@ -28,7 +28,7 @@ $(document).ready(function () {
 //Search for locations in the browse textbox
 $(document).ready(function () {
   const locations = [
-    "Main Street Science World",
+    "Vancouver Main Street Science World",
     "Vancouver International Airport (YVR)",
   ]; // Your location list
 

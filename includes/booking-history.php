@@ -2,7 +2,7 @@
 include("../includes/connect-db.php");
 
 // SQL Query to fetch all data
-$sql = "SELECT `Booking ID`, `Car ID`, Location, `Start Date`, `End Date`, `Total Price` FROM booking WHERE email = ? ORDER BY `Start Date` ASC";
+$sql = "SELECT `Booking ID`, `Car Code`, Location, `Start Date`, `End Date`, `Total Price` FROM booking WHERE email = ? ORDER BY `Start Date` ASC";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $_SESSION['email']); // "s" means string type
