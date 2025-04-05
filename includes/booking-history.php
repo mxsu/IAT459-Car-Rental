@@ -35,5 +35,8 @@ if ($result->num_rows > 0) {
     echo "No records found.";
 }
 
+
+
+
 // Close the MySQLi connection
 $conn->close();
