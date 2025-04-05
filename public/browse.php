@@ -65,6 +65,7 @@ if (!$conn) {
 
         <div class="left-filter">
             <form id="filter-form">
+                <input type="hidden" name="page" id="page-number" value="1">
                 <!-- Car Body Type -->
                 <h3>Car Body Type</h3>
                 <input type="checkbox" id="car" name="body_type[]" value="Car">
@@ -81,7 +82,7 @@ if (!$conn) {
 
                 <!-- Fuel Type -->
                 <h3>Fuel Type</h3>
-                <input type="checkbox" id="gas" name="fuel_type[]" value="Gasoline">
+                <input type="checkbox" id="gas" name="fuel_type[]" value="Gas">
                 <label for="gas"> Gasoline </label><br>
                 <input type="checkbox" id="electric" name="fuel_type[]" value="Electric">
                 <label for="electric"> Electric </label><br>
@@ -124,6 +125,13 @@ if (!$conn) {
                     data: formData,
                     success: function(response) {
                         $(".right-content").html(response);
+
+                        // Re-bind click after new content is loaded
+                        $(".pagination-btn").on("click", function() {
+                            const page = $(this).data("page");
+                            $("#page-number").val(page); // update hidden input
+                            fetchCars(); // re-fetch with new page number
+                        });
                     },
                     error: function() {
                         alert("Failed to retrieve cars. Please try again.");
@@ -134,9 +142,10 @@ if (!$conn) {
             // Fetch cars on page load
             fetchCars();
 
-            // Fetch cars when form is submitted
+            // Fetch cars when filters are submitted
             $("#filter-form").submit(function(event) {
-                event.preventDefault(); // Prevent form from reloading the page
+                event.preventDefault();
+                $("#page-number").val(1); // reset to page 1
                 fetchCars();
             });
         });
