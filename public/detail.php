@@ -1,56 +1,3 @@
-<?php
-require('../includes/connect-db.php');
-
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $db);
-
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-echo "Connected successfully";
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $_SESSION['car-code'] = $_POST['carCode'];
-    $_SESSION['manufacturer'] = $_POST['manufacturer'];
-    $_SESSION['model'] = $_POST['model'];
-    $_SESSION['body-type'] = $_POST['bodyType'];
-    $_SESSION['price'] = $_POST['price'];
-    $_SESSION['seating'] = $_POST['seating'];
-} else {
-    echo " No POST data received from filter-cars.php.";
-}
-
-
-$carCode = $_POST['car-code'];
-
-// Prepare the SQL query to fetch the first car of the specified body type
-// $query = "SELECT * FROM `car` c 
-// JOIN `car specifications` cs ON c.`Car Code` = cs.`Car Code` 
-// WHERE cs.`Car Code` = ? LIMIT 1";
-
-$query = "SELECT * FROM `car specifications` WHERE `Car Code` = ? LIMIT 1";
-
-
-// Initialize the prepared statement
-$stmt = mysqli_prepare($conn, $query);
-
-// Bind the parameter (body_type)
-mysqli_stmt_bind_param($stmt, "s", $carCode);
-
-// Execute the statement
-mysqli_stmt_execute($stmt);
-
-
-// Get the result
-$result = mysqli_stmt_get_result($stmt);
-
-// Fetch the first car
-$car = mysqli_fetch_assoc($result);
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,6 +7,8 @@ $car = mysqli_fetch_assoc($result);
     <title>Browse Cars</title>
     <?php
     include("../includes/navbar.php");
+    include('../includes/filter-car-process.php');
+    $car = $_SESSION['car'] ?? null; // Get the car details from the session
     ?>
 </head>
 
@@ -69,12 +18,13 @@ $car = mysqli_fetch_assoc($result);
         <div class="">
             <?php if ($car) {
                 // Display the car details
-                echo "<div class='car-details'>";
-                echo "<h2>" . htmlspecialchars($car['Manufacturer']) . "</h2>";
-                echo "<h2>" . htmlspecialchars($car['Model']) . "</h2>";
+                echo "<h2>" . "Selected Car" . "</h2>";
+                echo "<h3>" . htmlspecialchars($car['Manufacturer']) . " " . htmlspecialchars($car['Model']) . "</h3>";
                 echo "<p>Seats: " . htmlspecialchars($car['Seating']) . "</p>";
                 echo "<p>Fuel Type: " . htmlspecialchars($car['Fuel Type']) . "</p>";
-
+                echo "<p>Daily Price: " . htmlspecialchars($car['daily_price']) . "</p>";
+                echo "<p>Daily Mileage Allowance: " . htmlspecialchars($car['Mileage']) . "</p>";
+                echo "<br>";
                 echo "</div>";
             } else {
                 echo "<p>No cars found for the selected car Code.</p>";
@@ -83,20 +33,30 @@ $car = mysqli_fetch_assoc($result);
         </div>
 
         <div class="left-filter">
-            <form action="../includes/detail-process.php" method="post" id="filter-form">
-                <input type="radio" id="no" name="coverage" value="0">
-                <label for="no"> No Coverage </label><br>
+            <form action="../includes/detail-process.php" method="post">
+                <input type="radio" id="no" name="coverage" value="none">
+                <label for="no"> No Coverage. $0.00</label><br>
 
-                <input type="radio" id="basic" name="coverage" value="1">
-                <label for="basic"> Basic </label><br>
+                <input type="radio" id="basic" name="coverage" value="basic">
+                <label for="basic"> Basic. $25.00 a day </label><br>
 
-                <input type="radio" id="full" name="coverage" value="2">
-                <label for="full"> Full </label><br>
+                <input type="radio" id="full" name="coverage" value="full">
+                <label for="full"> Full Coverage. $42.00 a day </label><br>
 
                 <button type="submit">Reserve</button>
             </form>
         </div>
     </div>
+    <script>
+        // Validate form submission
+        document.getElementById("filter-form").addEventListener("submit", function(event) {
+            // Check if a radio button is selected
+            if (!document.querySelector('input[name="coverage"]:checked')) {
+                alert("Please select a coverage option to proceed.");
+                event.preventDefault(); // Prevent the form from submitting
+            }
+        });
+    </script>
 </body>
 
 </html>

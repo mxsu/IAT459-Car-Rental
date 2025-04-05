@@ -1,6 +1,6 @@
 <?php
 require('../includes/connect-db.php');
-
+session_start();
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $db);
 
@@ -9,40 +9,62 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+$location = $_SESSION['location'] ?? ''; // Get location from session
+if (empty($location)) {
+    echo "Location is not set in the session.";
+    exit;
+}
+
+// Escape the location string properly
+$location = mysqli_real_escape_string($conn, $location);
+
 $limit = isset($_POST['limit']) ? (int)$_POST['limit'] : 4;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Get the current page number from URL, default to page 1
-$offset = ($page - 1) * $limit; // Calculate the offset for pagination
+$page = isset($_POST['page']) ? (int)$_POST['page'] : 1;
+$offset = ($page - 1) * $limit;
 
 // Start base query
-$query = "SELECT Manufacturer, Model, `Body Type`, `Drive Train`, `Fuel Type`, `Car Code`, daily_price, Seating FROM `car specifications` WHERE 1=1 ";
+$query = "
+    SELECT cs.Manufacturer, cs.Model, cs.`Body Type`, cs.`Drive Train`, cs.`Fuel Type`, 
+           cs.`Car Code`, cs.daily_price, cs.Seating 
+    FROM `car specifications` AS cs 
+    JOIN car AS c ON cs.`Car Code` = c.`Car Code` 
+    WHERE c.Location = '$location'
+";
 
 // Add filters based on user input
-if (isset($_POST['body_type']) && !empty($_POST['body_type'])) {
-    $bodyTypes = implode("','", $_POST['body_type']);
-    $query .= " AND `Body Type` IN ('$bodyTypes')";
+if (!empty($_POST['body_type'])) {
+    $bodyTypes = implode("','", array_map(function ($item) use ($conn) {
+        return mysqli_real_escape_string($conn, $item);
+    }, $_POST['body_type']));
+    $query .= " AND cs.`Body Type` IN ('$bodyTypes')";
 }
 
-if (isset($_POST['fuel_type']) && !empty($_POST['fuel_type'])) {
-    $fuelTypes = implode("','", $_POST['fuel_type']);
-    $query .= " AND `Fuel Type` IN ('$fuelTypes')";
+if (!empty($_POST['fuel_type'])) {
+    $fuelTypes = implode("','", array_map(function ($item) use ($conn) {
+        return mysqli_real_escape_string($conn, $item);
+    }, $_POST['fuel_type']));
+    $query .= " AND cs.`Fuel Type` IN ('$fuelTypes')";
 }
 
-if (isset($_POST['seats']) && !empty($_POST['seats'])) {
+if (!empty($_POST['seats'])) {
     $seatConditions = [];
     foreach ($_POST['seats'] as $seat) {
+        $seat = mysqli_real_escape_string($conn, $seat);
         if ($seat === "6+") {
-            $seatConditions[] = "Seating > 6";
+            $seatConditions[] = "cs.Seating > 6";
         } else {
-            $seatConditions[] = "Seating = '$seat'";
+            $seatConditions[] = "cs.Seating = '$seat'";
         }
     }
     $query .= " AND (" . implode(" OR ", $seatConditions) . ")";
 }
 
-// Add LIMIT and OFFSET for pagination
+// Add LIMIT and OFFSET
+$query .= "GROUP BY cs.`Car Code`";
+$query .= "ORDER BY cs.`Car Code` ASC"; // Order by Car Code
 $query .= " LIMIT $limit OFFSET $offset";
 
-// Execute the query to get the cars
+// Execute
 $result = mysqli_query($conn, $query);
 
 // Display results
@@ -71,17 +93,12 @@ if (mysqli_num_rows($result) > 0) {
             </div>
             <div class='card-button-section'>
                 <div class='card-text'>Price</div>
-                <div class='card-title'>$69.95</div> 
+                <div class='card-title'>{$row["daily_price"]}</div> 
                 <!-- change to actual price later -->
-                <button type='button' class='card-button' 
-                    data-manufacturer='{$row["Manufacturer"]}' 
-                    data-model='{$row["Model"]}' 
-                    data-body-type='{$row["Body Type"]}' 
-                    data-price='{$row["daily_price"]}'
-                    data-car-code='{$row["Car Code"]}'
-                    data-seating='{$row["Seating"]}'>
-                    Pay Now
-                </button>
+                <form action='detail.php' method='POST'>
+                    <input type='hidden' name='car-code' value='{$row["Car Code"]}'>
+                    <button type='submit' class='card-button'>Pay Now</button>
+                </form>
             </div>
         </div>";
     }
@@ -90,16 +107,18 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 // Get total rows to calculate number of pages
-$count_query = "SELECT COUNT(*) AS total FROM `car specifications` WHERE 1=1";
+$count_query = "SELECT COUNT(*) AS total FROM `car specifications` AS cs JOIN car AS c ON c.`Car Code` = cs.`Car Code` WHERE c.Location = '$location'";
 
 if (isset($_POST['body_type']) && !empty($_POST['body_type'])) {
+
     $bodyTypes = implode("','", $_POST['body_type']);
-    $count_query .= " AND `Body Type` IN ('$bodyTypes')";
+    $count_query .= " AND cs.`Body Type` IN ('$bodyTypes')";
 }
 
 if (isset($_POST['fuel_type']) && !empty($_POST['fuel_type'])) {
+
     $fuelTypes = implode("','", $_POST['fuel_type']);
-    $count_query .= " AND `Fuel Type` IN ('$fuelTypes')";
+    $count_query .= " AND cs.`Fuel Type` IN ('$fuelTypes')";
 }
 
 if (isset($_POST['seats']) && !empty($_POST['seats'])) {
@@ -123,7 +142,7 @@ $total_pages = ceil($total_rows / $limit);
 if ($total_pages > 1) {
     echo "<div class='pagination'>";
     for ($i = 1; $i <= $total_pages; $i++) {
-        echo "<button class='pagination-btn' onclick='window.location.href=\"?page=$i\"'>$i</button>";
+        echo "<button class='pagination-btn' data-page='$i'>$i</button>";
     }
     echo "</div>";
 }
