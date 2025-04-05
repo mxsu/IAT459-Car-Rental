@@ -1,4 +1,36 @@
 <?php
+    // require('../includes/connect-db.php');
+
+    // // Create connection
+    // $conn = mysqli_connect($servername, $username, $password, $db);
+    
+    // // Check connection
+    // if (!$conn) {
+    //     die("Connection failed: " . mysqli_connect_error());
+    // }
+
+    // // insert into booking table: email, car_code, location, start date, end date, coverage, total_price
+    // $email = $_SESSION['email'];
+    // $car_code = $_SESSION['car-code'];
+    // $location = $_SESSION['location'];
+    // $start_date = $_SESSION['start-date'];
+    // $end_date = $_SESSION['end-date'];
+    // $coverage = $_SESSION['coverage'];
+    // $total_price = $_SESSION['total-price'];
+
+    // $booking_query = "INSERT INTO booking (email,`Car Code`, Location, `Start Date`, `End Date`, Coverage, `Total Price`) VALUES(?, ?, ?, ?, ?, ?, ?)";
+    // $stmt = $conn->prepare($booking_query);
+    // $stmt->bind_param("ssssssd", $email, $car_code, $location, $start_date, $end_date, $coverage, $total_price);
+
+    // if ($stmt->execute()) {
+    //     echo "Booking successfully recorded";
+    // } else {
+    //     echo "Error: " . $stmt->error;
+    // }
+
+    // $stmt->close();
+    // $conn->close();
+
 
 ?>
 
@@ -15,6 +47,7 @@
 
 <body class="column-50-50">
     <?php
+    require('../includes/reserve-car.php');
     $car = $_SESSION['car'];
     print_r($car);
     ?>
