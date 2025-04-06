@@ -36,21 +36,33 @@
     $coverage = $_SESSION['coverage'];
     $total_price = $_SESSION['total-price'];
 
+    //FLOOR(RAND() * 90000000) + 10000000 = random 8 digit number
     //removed total price to pay_query
-    $booking_query = "INSERT INTO booking (`Booking ID`,email,`Car Code`, Location, `Start Date`, `End Date`, Coverage,) VALUES(FLOOR(RAND() * 90000000) + 10000000 ,?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($booking_query);
-    $stmt->bind_param("ssssssd", $email, $car_code, $location, $start_date, $end_date, $coverage);
+    //insert into booking
+    $booking_query = "INSERT INTO booking (`Booking ID`,email,`Car Code`, Location, `Start Date`, `End Date`, Coverage) VALUES(FLOOR(RAND() * 90000000) + 10000000 ,?, ?, ?, ?, ?, ?)";
+    $book_stmt = $conn->prepare($booking_query);
+    $book_stmt->bind_param("sssssd", $email, $car_code, $location, $start_date, $end_date, $coverage);
 
-    // $pay_query = "INSERT INTO booking (`payment_date`,`payment_id`,`payment_total`) VALUES(CURRENT_DATE, FLOOR(RAND() * 90000000) + 10000000 ,?)";
-    // $stmt = $conn->prepare($pay_query);
-    // $stmt->bind_param("d", $total_price);
+    //insert into payments
+    $pay_query = "INSERT INTO payment (`payment_date`,`payment_id`,`payment_total`) VALUES(CURRENT_DATE, FLOOR(RAND() * 90000000) + 10000000 ,?)";
+    $pay_stmt = $conn->prepare($pay_query);
+    $pay_stmt->bind_param("d", $total_price);
 
-    if ($stmt->execute()) {
+    if ($book_stmt->execute()) {
         echo "Booking successfully recorded";
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Error: " . $book_stmt->error;
     }
-    $stmt->close();
+    $book_stmt->close();
+    
+
+    if ($pay_stmt->execute()) {
+        echo "payment successfully recorded";
+    } else {
+        echo "Error: " . $pay_stmt->error;
+    }
+    $pay_stmt->close();
+
     $conn->close();
     ?>
     <h1>Booking Confirmation</h1>
