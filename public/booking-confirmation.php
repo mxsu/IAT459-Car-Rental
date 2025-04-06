@@ -36,18 +36,20 @@
     $coverage = $_SESSION['coverage'];
     $total_price = $_SESSION['total-price'];
 
-    $booking_query = "INSERT INTO booking (email,`Car Code`, Location, `Start Date`, `End Date`, Coverage, `Total Price`) VALUES(?, ?, ?, ?, ?, ?, ?)";
+    //removed total price to pay_query
+    $booking_query = "INSERT INTO booking (`Booking ID`,email,`Car Code`, Location, `Start Date`, `End Date`, Coverage,) VALUES(FLOOR(RAND() * 90000000) + 10000000 ,?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($booking_query);
-    $stmt->bind_param("ssssssd", $email, $car_code, $location, $start_date, $end_date, $coverage, $total_price);
+    $stmt->bind_param("ssssssd", $email, $car_code, $location, $start_date, $end_date, $coverage);
+
+    // $pay_query = "INSERT INTO booking (`payment_date`,`payment_id`,`payment_total`) VALUES(CURRENT_DATE, FLOOR(RAND() * 90000000) + 10000000 ,?)";
+    // $stmt = $conn->prepare($pay_query);
+    // $stmt->bind_param("d", $total_price);
 
     if ($stmt->execute()) {
         echo "Booking successfully recorded";
     } else {
         echo "Error: " . $stmt->error;
     }
-    // when adding another booking, Fatal error: Uncaught mysqli_sql_exception: Duplicate entry '0' for key 'PRIMARY' 
-    // possibly have to remove entries from booking:
-    // when adding auto increment:  Query error: #1062 - ALTER TABLE causes auto_increment resequencing, resulting in duplicate entry '1' for key 'PRIMARY'
     $stmt->close();
     $conn->close();
     ?>
