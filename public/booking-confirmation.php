@@ -20,6 +20,7 @@
 <body>
     <?php
     require('../includes/reserve-car.php');
+    // require('../includes/detail-process.php');
     $car = $_SESSION['car'];
     require('../includes/connect-db.php');
     $conn = mysqli_connect($servername, $username, $password, $db);
@@ -35,6 +36,19 @@
     $end_date = $_SESSION['end-date'];
     $coverage = $_SESSION['coverage'];
     $total_price = $_SESSION['total-price'];
+    // $total_insurance = $_SESSION['total-insurance'];
+
+    // if email and car code are in a stored booking then booking should fail
+    $check_booking_query = "SELECT `Booking ID` FROM booking WHERE email = ? AND `Car Code` = ?";
+    $stmt_check = $conn->prepare($check_booking_query);
+    $stmt_check->bind_param("ss", $_SESSION['email'], $_SESSION['car-code']);
+    $stmt_check->execute();
+    $stmt_check->store_result();
+
+    if ($stmt_check->num_rows > 0) {
+        echo "You already have a booking!";
+    } else {
+
 
     //FLOOR(RAND() * 90000000) + 10000000 = random 8 digit number
     //removed total price to pay_query
@@ -44,9 +58,9 @@
     $book_stmt->bind_param("sssssd", $email, $car_code, $location, $start_date, $end_date, $coverage);
 
     //insert into payments
-    $pay_query = "INSERT INTO payment (`payment_date`,`payment_id`,`payment_total`) VALUES(CURRENT_DATE, FLOOR(RAND() * 90000000) + 10000000 ,?)";
+    $pay_query = "INSERT INTO payment (`payment_date`,`payment_id`,`payment_total`,email) VALUES(CURRENT_DATE, FLOOR(RAND() * 90000000) + 10000000 ,?,?)";
     $pay_stmt = $conn->prepare($pay_query);
-    $pay_stmt->bind_param("d", $total_price);
+    $pay_stmt->bind_param("ds", $total_price, $email);
 
     if ($book_stmt->execute()) {
         echo "Booking successfully recorded";
@@ -63,13 +77,30 @@
     }
     $pay_stmt->close();
 
+    $bookID = "SELECT `Booking ID` FROM booking WHERE Email = ?";
+    $IDstmt = $conn->prepare($bookID);
+    $IDstmt->bind_param("s", $_SESSION['email']); 
+    $IDstmt->execute();
+    $IDresult = $IDstmt->get_result();
+
+    if ($row = $IDresult->fetch_assoc()) {
+        $_SESSION['booking_id'] = $row['Booking ID'];
+    }
+
+    $IDstmt->close();
+
+    }
+
+    $stmt_check->close();
+
+
     $conn->close();
     ?>
     <h1>Booking Confirmation</h1>
     <p>Thank you for your booking!</p>
     <p>Your booking details are as follows:</p>
     <ul>
-        <li><strong>Booking ID:</strong></li>
+        <li><strong>Booking ID:</strong> <?= htmlspecialchars($_SESSION['booking_id']) ?></li>
         <li><strong>First Name:</strong> <?= htmlspecialchars($_SESSION['first_name']) ?></li>
         <li><strong>Last Name:</strong> <?= htmlspecialchars($_SESSION['last_name']) ?></li>
         <li><strong>Email:</strong> <?= htmlspecialchars($_SESSION['email']) ?></li>
