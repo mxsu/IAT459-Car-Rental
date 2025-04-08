@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsDeliver.net/npm/water.css/out/water.min.css" />
     <?php
     include("../includes/navbar.php");
+    require('../includes/booking-process.php');
     ?>
 </head>
 
@@ -28,73 +29,7 @@
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
-    // insert into booking table: email, car_code, location, start date, end date, coverage, total_price
-    $email = $_SESSION['email'];
-    $car_code = $_SESSION['car-code'];
-    $location = $_SESSION['location'];
-    $start_date = $_SESSION['start-date'];
-    $end_date = $_SESSION['end-date'];
-    $coverage = $_SESSION['coverage'];
-    $total_price = $_SESSION['total-price'];
-    // $total_insurance = $_SESSION['total-insurance'];
-
-    // if email and car code are in a stored booking then booking should fail
-    $check_booking_query = "SELECT `Booking ID` FROM booking WHERE email = ? AND `Car Code` = ?";
-    $stmt_check = $conn->prepare($check_booking_query);
-    $stmt_check->bind_param("ss", $_SESSION['email'], $_SESSION['car-code']);
-    $stmt_check->execute();
-    $stmt_check->store_result();
-
-    if ($stmt_check->num_rows > 0) {
-        echo "You already have a booking!";
-    } else {
-
-
-    //FLOOR(RAND() * 90000000) + 10000000 = random 8 digit number
-    //removed total price to pay_query
-    //insert into booking
-    $booking_query = "INSERT INTO booking (`Booking ID`,email,`Car Code`, Location, `Start Date`, `End Date`, Coverage) VALUES(FLOOR(RAND() * 90000000) + 10000000 ,?, ?, ?, ?, ?, ?)";
-    $book_stmt = $conn->prepare($booking_query);
-    $book_stmt->bind_param("sssssd", $email, $car_code, $location, $start_date, $end_date, $coverage);
-
-    //insert into payments
-    $pay_query = "INSERT INTO payment (`payment_date`,`payment_id`,`payment_total`,email) VALUES(CURRENT_DATE, FLOOR(RAND() * 90000000) + 10000000 ,?,?)";
-    $pay_stmt = $conn->prepare($pay_query);
-    $pay_stmt->bind_param("ds", $total_price, $email);
-
-    if ($book_stmt->execute()) {
-        echo "Booking successfully recorded";
-    } else {
-        echo "Error: " . $book_stmt->error;
-    }
-    $book_stmt->close();
     
-
-    if ($pay_stmt->execute()) {
-        echo "payment successfully recorded";
-    } else {
-        echo "Error: " . $pay_stmt->error;
-    }
-    $pay_stmt->close();
-
-    $bookID = "SELECT `Booking ID` FROM booking WHERE Email = ?";
-    $IDstmt = $conn->prepare($bookID);
-    $IDstmt->bind_param("s", $_SESSION['email']); 
-    $IDstmt->execute();
-    $IDresult = $IDstmt->get_result();
-
-    if ($row = $IDresult->fetch_assoc()) {
-        $_SESSION['booking_id'] = $row['Booking ID'];
-    }
-
-    $IDstmt->close();
-
-    }
-
-    $stmt_check->close();
-
-
-    $conn->close();
     ?>
     <h1>Booking Confirmation</h1>
     <p>Thank you for your booking!</p>
