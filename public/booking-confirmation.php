@@ -21,7 +21,7 @@
 <body>
     <?php
     require('../includes/reserve-car.php');
-    // require('../includes/detail-process.php');
+    require('../includes/detail-process.php');
     $car = $_SESSION['car'];
     require('../includes/connect-db.php');
     $conn = mysqli_connect($servername, $username, $password, $db);

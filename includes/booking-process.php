@@ -32,24 +32,12 @@ if ($stmt_check->num_rows > 0) {
     $book_stmt = $conn->prepare($booking_query);
     $book_stmt->bind_param("sssssd", $email, $car_code, $location, $start_date, $end_date, $coverage);
 
-    //insert into payments
-    $pay_query = "INSERT INTO payment (`payment_date`,`payment_total`,email) VALUES(CURRENT_DATE ,?,?)";
-    $pay_stmt = $conn->prepare($pay_query);
-    $pay_stmt->bind_param("ds", $total_price, $email);
-
     if ($book_stmt->execute()) {
         $_SESSION['booking_success'] = "Booking successfully recorded";
     } else {
         $_SESSION['booking_error'] = "Error: " . $book_stmt->error;
     }
     $book_stmt->close();
-    
-    if ($pay_stmt->execute()) {
-        $_SESSION['payment_success'] = "Payment successfully recorded";
-    } else {
-        $_SESSION['payment_error'] = "Error: " . $pay_stmt->error;
-    }
-    $pay_stmt->close();
 
     $bookID = "SELECT `Booking ID` FROM booking WHERE Email = ?";
     $IDstmt = $conn->prepare($bookID);
@@ -62,6 +50,19 @@ if ($stmt_check->num_rows > 0) {
     }
 
     $IDstmt->close();
+
+    //insert into payments
+    $pay_query = "INSERT INTO payment (`payment_date`,`payment_total`,`booking_id`) VALUES(CURRENT_DATE ,?,?)";
+    $pay_stmt = $conn->prepare($pay_query);
+    $pay_stmt->bind_param("ds", $total_price, $_SESSION['booking_id']);
+
+ 
+    if ($pay_stmt->execute()) {
+        $_SESSION['payment_success'] = "Payment successfully recorded";
+    } else {
+        $_SESSION['payment_error'] = "Error: " . $pay_stmt->error;
+    }
+    $pay_stmt->close();
 }
 
 $stmt_check->close();
