@@ -2,7 +2,7 @@
 include("../includes/connect-db.php");
 
 // SQL Query to fetch all data
-$sql = "SELECT `Booking ID`, `Car Code`, Location, `Start Date`, `End Date`, `payment_total` FROM booking JOIN payment ON booking.payment_id = payment.payment_id
+$sql = "SELECT `Booking ID`, `Car Code`, Location, `Start Date`, `End Date`, `payment_total` FROM booking JOIN payment ON booking.booking_id = payment.booking_id
 WHERE email = ? ORDER BY `Start Date` ASC";
 
 $stmt = $conn->prepare($sql);

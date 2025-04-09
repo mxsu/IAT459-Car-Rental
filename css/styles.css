@@ -376,6 +376,7 @@ nav ul li:last-child {
 
 /* Detail page layout */
 .container-detail {
+  margin-top: 20px;
   display: flex;
   gap: 30px;
   justify-content: space-between;
