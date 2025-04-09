@@ -520,3 +520,69 @@ nav ul li:last-child {
   height: auto;
   border-radius: 8px; /* Optional: adds rounded corners to the image */
 }
+
+.card-container-history {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  padding: 20px;
+}
+
+.card-history {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-item-history {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.card-item-history strong {
+  color: #333;
+}
+
+.cancel-btn-history {
+  background-color: #ff4c4c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.cancel-btn-history:hover {
+  background-color: #ff0000;
+}
+
+/* Container for the profile and booking history */
+.profile-container {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Profile Settings section */
+.profile-settings-container {
+  width: 30%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f4f4f4; /* Light gray background */
+  border-radius: 8px; /* Rounded corners */
+  margin-right: 20px; /* Space between the profile and booking history */
+}
+
+/* Booking History section */
+.booking-history-container {
+  width: 70%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #fff; /* White background */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}

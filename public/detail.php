@@ -57,7 +57,7 @@
         </div>
 
         <div class="coverage-options-detail">
-            <form action="../includes/detail-process.php" method="post">
+            <form action="../includes/detail-process.php" method="post" id="coverage-form">
                 <h3>Select Coverage Option</h3>
 
                 <!-- Radio buttons for coverage options -->
@@ -77,7 +77,7 @@
 
     <script>
         // Validate form submission
-        document.getElementById("filter-form").addEventListener("submit", function(event) {
+        document.getElementById("coverage-form").addEventListener("submit", function(event) {
             // Check if a radio button is selected
             if (!document.querySelector('input[name="coverage"]:checked')) {
                 alert("Please select a coverage option to proceed.");

@@ -22,35 +22,20 @@ echo "Connected Successfully";
     ?>
 </head>
 
-
 <body>
-    <?php if (isset($_SESSION["user_id"])): ?>
-
-        <p>Welcome back <?= htmlspecialchars($user["First Name"]) ?></p>
-        <p><a href="logout.php">Log out</a></p>
-        <br>
-    <?php endif; ?>
-
-    <div class="grid-container">
-        <div class="grid-25">
+    <div class="profile-container">
+        <div class="profile-settings-container">
             <h3>Profile Settings</h3>
             <br>
             Name, Driver License,
-
-
-
-
-
+            <!-- Additional Profile Info here -->
         </div>
-        <div class="grid-75">
+
+        <div class="booking-history-container">
             <h3>Booking History</h3>
-
             <?php include("../includes/booking-history.php"); ?>
-
-
-
         </div>
     </div>
-
-
 </body>
+
+</html>
