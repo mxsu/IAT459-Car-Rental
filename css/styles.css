@@ -546,7 +546,7 @@ nav ul li:last-child {
 }
 
 .cancel-btn-history {
-  background-color: #ff4c4c;
+  background-color: #007bff;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -556,7 +556,7 @@ nav ul li:last-child {
 }
 
 .cancel-btn-history:hover {
-  background-color: #ff0000;
+  background-color: #0056b3;
 }
 
 /* Container for the profile and booking history */

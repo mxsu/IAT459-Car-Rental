@@ -33,6 +33,22 @@
                     $image_path = "../images/dodge_caravan.jpg";
                 } elseif (strpos($car['Car Code'], "Toyota_Sienna") !== false) {
                     $image_path = "../images/toyota_sienna.png";
+                }elseif (strpos($car['Car Code'], "Ford_Escape") !== false) {
+                    $image_path = "../images/ford_escape.png";
+                }elseif (strpos($car['Car Code'], "Ford_F150") !== false) {
+                    $image_path = "../images/fordf150.png";
+                }elseif (strpos($car['Car Code'], "Ford_Transit") !== false) {
+                    $image_path = "../images/ford_transit.png";
+                }elseif (strpos($car['Car Code'], "Volkswagen_Jetta") !== false) {
+                    $image_path = "../images/volkswagen_jetta.png";
+                }elseif (strpos($car['Car Code'], "Ford_Focus") !== false) {
+                    $image_path = "../images/ford_focus.png";
+                }elseif (strpos($car['Car Code'], "Hyundai_Ionic") !== false) {
+                    $image_path = "../images/ionic5.png";
+                }elseif (strpos($car['Car Code'], "Ford_Lightning") !== false) {
+                    $image_path = "../images/ford_f150lightning.png";
+                }elseif (strpos($car['Car Code'], "Nissan_Leaf") !== false) {
+                    $image_path = "../images/nissan_leaf.png";
                 }
 
                 // Display the image

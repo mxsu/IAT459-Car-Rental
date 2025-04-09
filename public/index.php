@@ -41,6 +41,9 @@
             </form>
 
         </div>
+
+        <h2>About Us</h2>
+    <p>Marine Drive rental company in Vancouver offers convenient pick-up locations at YVR Airport and Science World, providing a wide selection of vehicles for your travel needs. Whether you're visiting the city or exploring its surroundings, we ensure a smooth and reliable rental experience.</p>
     </div>
 
     <script src="../JS/jquery.js"></script>

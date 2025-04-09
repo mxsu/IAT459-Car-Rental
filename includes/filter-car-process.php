@@ -12,7 +12,7 @@ if (!$conn) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['car-code'] = $_POST['car-code'];
 } else {
-    echo " No POST data received from filter-cars.php.";
+    // echo " No POST data received from filter-cars.php.";
 }
 
 $carCode = $_SESSION['car-code'];
