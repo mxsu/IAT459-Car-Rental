@@ -14,26 +14,53 @@
 
 <body>
 
-    <div class="">
-        <div class="">
+    <div class="container-detail">
+        <div class="car-info-detail">
             <?php if ($car) {
                 // Display the car details
                 echo "<h2>" . "Selected Car" . "</h2>";
                 echo "<h3>" . htmlspecialchars($car['Manufacturer']) . " " . htmlspecialchars($car['Model']) . "</h3>";
-                echo "<p>Seats: " . htmlspecialchars($car['Seating']) . "</p>";
-                echo "<p>Fuel Type: " . htmlspecialchars($car['Fuel Type']) . "</p>";
-                echo "<p>Daily Price: " . htmlspecialchars($car['daily_price']) . "</p>";
-                echo "<p>Daily Mileage Allowance: " . htmlspecialchars($car['Mileage']) . "</p>";
-                echo "<br>";
+
+                // Assuming you have a way to determine the car image (e.g., based on the car code)
+                $image_path = "../images/default-car.jpg"; // Default image
+                if (strpos($car['Car Code'], "Toyota_Corolla") !== false) {
+                    $image_path = "../images/toyota-corolla-sedan-2019-520018.jpg";
+                } elseif (strpos($car['Car Code'], "Toyota_Prius") !== false) {
+                    $image_path = "../images/prius.jpg";
+                } elseif (strpos($car['Car Code'], "Ford_Mustang") !== false) {
+                    $image_path = "../images/mustang.jpg";
+                } elseif (strpos($car['Car Code'], "Dodge_Caravan") !== false) {
+                    $image_path = "../images/dodge_caravan.jpg";
+                } elseif (strpos($car['Car Code'], "Toyota_Sienna") !== false) {
+                    $image_path = "../images/toyota_sienna.png";
+                }
+
+                // Display the image
+                echo "<img src='$image_path' alt='" . htmlspecialchars($car['Model']) . "' class='car-image-detail'>";
+
+                // Car details in two columns
+                echo "<div class='car-details-detail'>";
+                echo "<div class='car-detail'>";
+                echo "<p><strong>Seats:</strong> " . htmlspecialchars($car['Seating']) . "</p>";
+                echo "<p><strong>Fuel Type:</strong> " . htmlspecialchars($car['Fuel Type']) . "</p>";
+                echo "<p><strong>Daily Price:</strong> " . htmlspecialchars($car['daily_price']) . "</p>";
                 echo "</div>";
+                echo "<div class='car-detail'>";
+                echo "<p><strong>Daily Mileage Allowance:</strong> " . htmlspecialchars($car['Mileage']) . "</p>";
+                echo "</div>";
+                echo "</div>"; // End car-details
+                echo "<br>";
             } else {
                 echo "<p>No cars found for the selected car Code.</p>";
             }
             ?>
         </div>
 
-        <div class="left-filter">
+        <div class="coverage-options-detail">
             <form action="../includes/detail-process.php" method="post">
+                <h3>Select Coverage Option</h3>
+
+                <!-- Radio buttons for coverage options -->
                 <input type="radio" id="no" name="coverage" value="none">
                 <label for="no"> No Coverage. $0.00</label><br>
 
@@ -47,6 +74,7 @@
             </form>
         </div>
     </div>
+
     <script>
         // Validate form submission
         document.getElementById("filter-form").addEventListener("submit", function(event) {
