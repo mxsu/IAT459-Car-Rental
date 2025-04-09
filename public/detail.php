@@ -44,9 +44,10 @@
                 echo "<p><strong>Seats:</strong> " . htmlspecialchars($car['Seating']) . "</p>";
                 echo "<p><strong>Fuel Type:</strong> " . htmlspecialchars($car['Fuel Type']) . "</p>";
                 echo "<p><strong>Daily Price:</strong> " . htmlspecialchars($car['daily_price']) . "</p>";
-                echo "</div>";
+                echo "<p><strong>Drive Train:</strong> " . htmlspecialchars($car['Drive Train']) . "</p>";
                 echo "<div class='car-detail'>";
                 echo "<p><strong>Daily Mileage Allowance:</strong> " . htmlspecialchars($car['Mileage']) . "</p>";
+                echo "</div>";
                 echo "</div>";
                 echo "</div>"; // End car-details
                 echo "<br>";
@@ -65,10 +66,10 @@
                 <label for="no"> No Coverage. $0.00</label><br>
 
                 <input type="radio" id="basic" name="coverage" value="basic">
-                <label for="basic"> Basic. $25.00 a day </label><br>
+                <label for="basic"> Basic. $50.00 a day </label><br>
 
                 <input type="radio" id="full" name="coverage" value="full">
-                <label for="full"> Full Coverage. $42.00 a day </label><br>
+                <label for="full"> Full Coverage. $100.00 a day </label><br>
 
                 <button type="submit">Reserve</button>
             </form>
