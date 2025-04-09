@@ -25,46 +25,42 @@ $stmt_check->bind_param("ss", $_SESSION['email'], $_SESSION['car-code']);
 $stmt_check->execute();
 $stmt_check->store_result();
 
-if ($stmt_check->num_rows > 0) {
-    $_SESSION['booking_error'] = "You already have a booking!";
+// if ($stmt_check->num_rows > 0) {
+//     $_SESSION['booking_error'] = "You already have a booking!";
+// } else {
+// Insert booking query
+$booking_query = "INSERT INTO booking (email, `Car Code`, `Location`, `Start Date`, `End Date`, Coverage) VALUES(?, ?, ?, ?, ?, ?)";
+$book_stmt = $conn->prepare($booking_query);
+$book_stmt->bind_param("sssssd", $email, $car_code, $location, $start_date, $end_date, $coverage);
+
+if ($book_stmt->execute()) {
+    // Get the auto-incremented Booking ID
+    $booking_id = $conn->insert_id;  // This will give you the last inserted ID
+    $_SESSION['booking_success'] = "Booking successfully recorded with ID: " . $booking_id;
 } else {
-    $booking_query = "INSERT INTO booking (email,`Car Code`, Location, `Start Date`, `End Date`, Coverage) VALUES(?, ?, ?, ?, ?, ?)";
-    $book_stmt = $conn->prepare($booking_query);
-    $book_stmt->bind_param("sssssd", $email, $car_code, $location, $start_date, $end_date, $coverage);
+    $_SESSION['booking_error'] = "Error: " . $book_stmt->error;
+}
+$book_stmt->close();
 
-    if ($book_stmt->execute()) {
-        $_SESSION['booking_success'] = "Booking successfully recorded";
-    } else {
-        $_SESSION['booking_error'] = "Error: " . $book_stmt->error;
-    }
-    $book_stmt->close();
+// Store the booking ID in the session for future use
+$_SESSION['booking_id'] = $booking_id;  // Save the ID to the session
 
-    $bookID = "SELECT `Booking ID` FROM booking WHERE Email = ?";
-    $IDstmt = $conn->prepare($bookID);
-    $IDstmt->bind_param("s", $_SESSION['email']); 
-    $IDstmt->execute();
-    $IDresult = $IDstmt->get_result();
+// Insert into payments table
+$pay_query = "INSERT INTO payment (`payment_date`, `payment_total`, `booking_id`) VALUES (CURRENT_DATE, ?, ?)";
+$pay_stmt = $conn->prepare($pay_query);
+$pay_stmt->bind_param("ds", $total_price, $_SESSION['booking_id']);  // Using the session value for the booking ID
 
-    if ($row = $IDresult->fetch_assoc()) {
-        $_SESSION['booking_id'] = $row['Booking ID'];
-    }
-
-    $IDstmt->close();
-
-    //insert into payments
-    $pay_query = "INSERT INTO payment (`payment_date`,`payment_total`,`booking_id`) VALUES(CURRENT_DATE ,?,?)";
-    $pay_stmt = $conn->prepare($pay_query);
-    $pay_stmt->bind_param("ds", $total_price, $_SESSION['booking_id']);
-
- 
-    if ($pay_stmt->execute()) {
-        $_SESSION['payment_success'] = "Payment successfully recorded";
-    } else {
-        $_SESSION['payment_error'] = "Error: " . $pay_stmt->error;
-    }
-    $pay_stmt->close();
+if ($pay_stmt->execute()) {
+    // Get the auto-incremented payment ID
+    $payment_id = $conn->insert_id;  // This will give you the last inserted payment ID
+    $_SESSION['payment_success'] = "Payment successfully recorded with Payment ID: " . $payment_id;
+} else {
+    $_SESSION['payment_error'] = "Error: " . $pay_stmt->error;
 }
 
-$stmt_check->close();
+$pay_stmt->close();
+
+$_SESSION['payment_id'] = $payment_id;  // Save the payment ID to the session
+
+// Close the connection
 $conn->close();
-?>

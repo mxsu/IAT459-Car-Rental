@@ -25,11 +25,11 @@
     $car = $_SESSION['car'];
     require('../includes/connect-db.php');
     $conn = mysqli_connect($servername, $username, $password, $db);
-    
+
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
-    
+
     ?>
     <h1>Booking Confirmation</h1>
     <p>Thank you for your booking!</p>
@@ -46,12 +46,12 @@
         <li><strong>Return Date:</strong> <?= htmlspecialchars($_SESSION['end-date']) ?></li>
         <li><strong>Coverage:</strong> <?= htmlspecialchars($_SESSION['coverage']) ?></li>
         <li><strong>Total Price: $</strong> <?= htmlspecialchars($_SESSION['total-price']) ?></li>
-        <li><strong>Payment ID:</strong></li>
+        <li><strong>Payment ID:</strong> <?= htmlspecialchars($_SESSION['payment_id']) ?> </li>
     </ul>
 
     <p>If you have any questions, please contact us.</p>
 
-    <form>
+    <form action="index.php" method="POST">
         <button type="submit">Back to Home</button>
     </form>
 
