@@ -15,26 +15,34 @@
 <body>
 
     <h1>Welcome to Marine Drive Rental</h1>
+    <div style="position: relative;">
+        <img src="../images/Jeffrey-Eisen-Vancouver.jpg" alt="Jeffery Eisen Vancouver" style="width:100%; height:700px; object-fit: cover;">
 
-    <?php if (isset($_SESSION["user_id"])): ?>
-        <p>Welcome back <?= htmlspecialchars($user["First Name"]) ?></p>
-        <p><a href="logout.php">Log out</a></p>
-        <br>
-    <?php endif; ?>
+        <div class="index-box">
 
+            <form action="../includes/index-process.php" method="POST">
 
-    <form action="../includes/index-process.php" method="POST">
-        <label for="browse">Search for a location:</label>
-        <input type="text" id="browse" name="browse" placeholder="Enter a location">
-        <div id="autocomplete-list" class="autocomplete-items"></div>
-        <label for="start-date">Select a reserve date:</label>
-        <br>
-        <input type="date" id="start-date" name="start-date" min="<?= date('Y-m-d')  ?>" required>
-        <label for="end-date">Select a return:</label>
-        <input type="date" id="end-date" name="end-date" min="<?= date('Y-m-d') ?>" required>
-        <br>
-        <button type="submit">Search</button>
-    </form>
+                <div>
+                    <label for="browse">Search for a location:</label>
+                    <input type="text" id="browse" name="browse" placeholder="Enter a location">
+                    <div id="autocomplete-list" class="autocomplete-items"></div>
+                </div>
+                <div id="autocomplete-list" class="autocomplete-items"></div>
+                <div>
+                    <label for="start-date">Select a reserve date:</label>
+                    <input type="date" id="start-date" name="start-date" min="<?= date('Y-m-d')  ?>" required>
+                </div>
+                <div>
+                    <label for="end-date">Select a return date: </label>
+                    <input type="date" id="end-date" name="end-date" min="<?= date('Y-m-d') ?>" required>
+                </div>
+                <div style="display: flex; justify-content: center; margin-top: 10px;"><button type="submit">Search</button></div>
+
+            </form>
+
+        </div>
+    </div>
+
     <script src="../JS/jquery.js"></script>
 </body>
 

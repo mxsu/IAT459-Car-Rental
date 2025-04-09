@@ -6,7 +6,7 @@ $conn = mysqli_connect($servername, $username, $password, $db);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
-echo "Connected successfully";
+// echo "Connected successfully";
 
 $carCode = $_SESSION['car-code'];  // Or another method to get the car code
 $location = $_SESSION['location'];  // Or another method to get the location

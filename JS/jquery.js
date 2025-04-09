@@ -1,3 +1,4 @@
+//For the card button on filter-cars.php
 $(document).ready(function () {
   // Event delegation method
   $(document).on("click", ".card-button", function () {
@@ -25,7 +26,8 @@ $(document).ready(function () {
   });
 });
 
-//Search for locations in the browse textbox
+//index.php
+//Search for locations in the index page textbox
 $(document).ready(function () {
   const locations = [
     "Vancouver Main Street Science World",

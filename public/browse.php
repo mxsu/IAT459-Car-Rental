@@ -33,39 +33,49 @@ if (!$conn) {
 
 <body>
 
+    <div class="browse-info">
+        <div class="browse-column">
+            <?php
+            if (isset($_SESSION["location"])) {
+                echo "<p style='font-size: 18px;'><strong>Location:</strong> " . htmlspecialchars($_SESSION["location"]) . "</p>";
+            } else {
+                echo "<p style='font-size: 18px;'><strong>Location:</strong> Not set</p>";
+            }
+            ?>
+            <h2>Browse our selection of cars below.</h2>
+        </div>
+        <div class="browse-column">
+            <?php
+            if (isset($_SESSION["start-date"])) {
+                echo "<p style='font-size: 18px;'><strong>Pickup Date:</strong> " . htmlspecialchars($_SESSION["start-date"]) . "</p>";
+            } else {
+                echo "<p style='font-size: 18px;'><strong>Pickup Date:</strong> Not set</p>";
+            }
 
-    <h1>Welcome to the Marine Drive Rentals</h1>
-    <?php
-    if (isset($_SESSION["location"])) {
-        echo "Location: " . htmlspecialchars($_SESSION["location"]) . nl2br("\n");
-    } else {
-        echo "Location is not set in the session.";
-    }
-    if (isset($_SESSION["start-date"])) {
-        echo "Pickup Date: " . htmlspecialchars($_SESSION["start-date"]) . nl2br("\n");
-    } else {
-        echo "start-date is not set in the session.";
-    }
-    if (isset($_SESSION["end-date"])) {
-        echo "Return Date: " . htmlspecialchars($_SESSION["end-date"]) . nl2br(" \n");
-    } else {
-        echo "end-date is not set in the session.";
-    }
+            if (isset($_SESSION["end-date"])) {
+                echo "<p style='font-size: 18px;'><strong>Return Date:</strong> " . htmlspecialchars($_SESSION["end-date"]) . "</p>";
+            } else {
+                echo "<p style='font-size: 18px;'><strong>Return Date:</strong> Not set</p>";
+            }
+            ?>
+        </div>
+    </div>
 
-    ?>
-    <h1>Welcome to Marine Drive Rentals</h1>
 
-    <p>Browse our selection of cars below.</p>
 
-    <h2>Filter Cars</h2>
+
+
     <div class="container">
-
-
         <!-- Filters Section -->
-
         <div class="left-filter">
+            <h2>Filter Cars</h2>
             <form id="filter-form">
                 <input type="hidden" name="page" id="page-number" value="1">
+
+                <!-- Search Bar -->
+                <h3>Search for a car</h3>
+                <input type="text" id="search-bar" name="search" placeholder="Search for a car...">
+
                 <!-- Car Body Type -->
                 <h3>Car Body Type</h3>
                 <input type="checkbox" id="car" name="body_type[]" value="Car">
@@ -99,7 +109,7 @@ if (!$conn) {
                 <label for="seats5"> 5 </label><br>
                 <input type="checkbox" id="seats6+" name="seats[]" value="6+">
                 <label for="seats6+"> 6+ </label><br>
-
+                <br>
                 <!-- Submit Button -->
                 <button type="submit">Apply Filters</button>
             </form>
@@ -113,8 +123,12 @@ if (!$conn) {
 
         </div>
     </div>
-
     <script>
+        //FETCH CARS
+        // for the browse page
+        // querying the database for the cars based on the filters selected by the user
+        // and displaying them in the right-content div
+        //FETCH CARS
         $(document).ready(function() {
             function fetchCars(limit = 4) {
                 let formData = $("#filter-form").serialize() + "&limit=" + limit;
@@ -135,7 +149,7 @@ if (!$conn) {
                     },
                     error: function() {
                         alert("Failed to retrieve cars. Please try again.");
-                    }
+                    },
                 });
             }
 
@@ -147,6 +161,12 @@ if (!$conn) {
                 event.preventDefault();
                 $("#page-number").val(1); // reset to page 1
                 fetchCars();
+            });
+
+            // Fetch cars when the search bar value changes (live search)
+            $("#search-bar").on("input", function() {
+                $("#page-number").val(1); // reset to page 1
+                fetchCars(); // re-fetch with new search term
             });
         });
     </script>
