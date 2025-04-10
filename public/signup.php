@@ -7,7 +7,6 @@
     <title>Sign Up</title>
     <?php
     include("../includes/navbar.php");
-    // include("../includes/process-signup.php");
     $form_data = $_SESSION["form_data"] ?? []; // Retrieve session data
     unset($_SESSION["form_data"]); // Remove session after using
     ?>
@@ -17,7 +16,7 @@
     </ul>
     <h1> Sign up </h1>
 
-    <form action="process-signup.php" method="POST" novalidate>
+    <form action="../includes/process-signup.php" method="POST" novalidate>
         <div>
             <label for="first-name">First Name:</label>
             <input type="text" id="first-name" name="first-name" required value="<?php echo htmlspecialchars($form_data["first-name"] ?? "") ?>">
