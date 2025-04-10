@@ -21,8 +21,7 @@ html {
 /* Container for the grid */
 .container {
   display: grid;
-  grid-template-columns: 25% 75%; /* 25% for the left column, 75% for the right */
-  gap: 10px; /* Space between columns */
+  grid-template-columns: 25% 75%; /* 25% for the left column, 75% for the right */ /* Space between columns */
   height: 100vh; /* Full viewport height */
   overflow-x: hidden;
 }
@@ -94,28 +93,52 @@ input[type="checkbox"]:checked + label::after {
 
 /* Landscape card container */
 .card {
-  width: 100%; /* Full width of its container */
+  width: auto; /* Full width of its container */
   max-width: 1200px; /* Max width to prevent it from becoming too large */
-  height: 200px; /* Set a small height */
+  height: 200px; /* Increase height for consistency */
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: white;
-  margin: auto;
+  margin: 10px;
   display: flex;
   flex-direction: row; /* Layout children side by side */
+  justify-content: space-between; /* Space between image and content */
 }
 
 .card img {
-  width: 40%; /* Image takes up 40% of the width */
-  height: 100%;
-  object-fit: cover; /* Ensure the image covers the height */
+  width: 300px; /* Set a consistent width for the images */
+  height: auto; /* Ensure the image takes up the full height of the card */
+  object-fit: contain; /* Make sure the image covers the entire area without stretching */
 }
 
 .card-content {
-  width: 60%; /* Content takes up the remaining 60% */
+  width: 75%; /* The content section takes up 60% of the width */
   padding: 15px;
+}
+
+.card-button-section {
+  width: 25%; /* The price and button section now takes up 40% of the width */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Align the button to the bottom */
+  padding: 15px;
+}
+
+.card-button {
+  padding: 12px 20px; /* Adjust padding for a wider button */
+  background-color: #007bff; /* Blue color for the button */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%; /* Make the button take up the full width of its container */
+}
+
+.card-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
 
 .card-title {
@@ -130,11 +153,6 @@ input[type="checkbox"]:checked + label::after {
   margin-bottom: 15px;
 }
 
-.card-text-big {
-  font-size: 24px;
-  color: #555;
-}
-
 .card-text {
   font-size: 16px;
   color: #555;
@@ -143,81 +161,6 @@ input[type="checkbox"]:checked + label::after {
 .card-text-small {
   font-size: 12px;
   color: #555;
-}
-
-.card-description {
-  font-size: 16px;
-  color: #555;
-  margin-bottom: 15px;
-}
-
-.card-button-section {
-  display: flex; /* Enable flexbox */
-  flex-direction: column;
-  justify-content: flex-end; /* Align the button to the right */
-  padding: 15px;
-}
-
-.card-button {
-  padding: 10px 20px;
-  background-color: #007bff; /* Blue color for the button */
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.card-button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-}
-
-/* Container to hold both sections */
-.container-detail {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.car-details {
-  background-color: #fff;
-  padding: 20px;
-  margin-bottom: 30px; /* Space between car details and insurance */
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 1200px;
-}
-
-.car-details h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.car-details p {
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-.car-details img {
-  max-width: 100%;
-  height: auto;
-  margin-top: 15px;
-}
-
-.car-details a {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-}
-
-.car-details a:hover {
-  background-color: #0056b3;
 }
 
 /* Insurance Select Section */
@@ -341,4 +284,343 @@ nav ul li:last-child {
 .pagination-btn:disabled {
   background-color: #e0e0e0;
   cursor: not-allowed;
+}
+
+.index-box {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -20%);
+  background-color: rgba(255, 255, 255, 1);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.index-box form > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.index-box label {
+  min-width: 160px; /* helps align labels */
+}
+
+.index-box input[type="text"],
+.index-box input[type="date"] {
+  flex: 1;
+  padding: 6px;
+}
+
+.index-box button {
+  padding: 8px 16px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+
+  /* Center the button */
+  align-self: center;
+}
+
+.index-box button:hover {
+  background-color: #0056b3;
+}
+
+.autocomplete-items {
+  position: absolute;
+  top: 10%;
+  left: 100%;
+  right: 0;
+  background-color: white;
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.autocomplete-items div:hover {
+  background-color: var(--secondary-color);
+}
+
+.browse-info {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: whitesmoke;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+
+.browse-column {
+  flex: 1;
+}
+
+.browse-column p {
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
+
+.browse-info p {
+  font-size: 18px;
+}
+
+/* Detail page layout */
+.container-detail {
+  margin-top: 20px;
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+  width: 100%; /* Ensure the container takes up the full width */
+  padding: 0;
+  flex-wrap: nowrap; /* Ensure the columns don't wrap */
+  box-sizing: border-box;
+}
+
+/* First column: Car info and image */
+.car-info-detail {
+  flex: 1 1 50%; /* This column will take up 50% of the available width */
+  background-color: var(--secondary-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  /* Remove height property so it will shrink according to content */
+}
+
+/* Car image styles */
+.car-image-detail {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  margin-bottom: 20px;
+  object-fit: cover;
+}
+
+/* Car details */
+.car-details-detail {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.car-detail {
+  flex: 1 1 45%; /* Adjusts car details to have a 50/50 split */
+  min-width: 300px;
+}
+
+/* Second column: Coverage options */
+.coverage-options-detail {
+  flex: 1 1 50%; /* This column will also take up 50% of the available width */
+  background-color: var(--primary-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Remove height property so it will shrink according to content */
+}
+
+/* Coverage options form styling */
+.coverage-options-detail label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.coverage-options-detail button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.coverage-options-detail button:hover {
+  background-color: #0056b3;
+}
+
+.coverage-options-detail input[type="radio"] {
+  vertical-align: middle; /* Ensures the radio button is vertically aligned */
+  margin-right: 10px; /* Adds some space between the radio button and text */
+}
+
+.coverage-options-detail label {
+  display: inline-block; /* Ensures the label aligns with the radio button */
+  vertical-align: middle; /* Vertically aligns the label with the radio button */
+}
+
+.grid-container-payment {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  width: 100%;
+  padding: 20px;
+}
+
+/* General styling for cards */
+.card-payment {
+  background-color: var(--secondary-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card-payment h3 {
+  margin-top: 0;
+}
+
+/* Adjust the form layout to make space for the left column */
+.grid-50-payment {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-50-payment form {
+  background-color: var(--primary-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Card layout for Car Details */
+.card-payment {
+  margin-bottom: 20px;
+}
+
+.car-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Creates two equal columns */
+  gap: 20px;
+  align-items: center;
+}
+
+.car-info {
+  padding-right: 20px; /* Adds some space between text and image */
+}
+
+.car-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.car-image img {
+  max-width: 100%; /* Ensures the image is responsive */
+  height: auto;
+  border-radius: 8px; /* Optional: adds rounded corners to the image */
+}
+
+.card-container-history {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  padding: 20px;
+}
+
+.card-history {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-item-history {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.card-item-history strong {
+  color: #333;
+}
+
+.cancel-btn-history {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.cancel-btn-history:hover {
+  background-color: #0056b3;
+}
+
+/* Container for the profile and booking history */
+.profile-container {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Profile Settings section */
+.profile-settings-container {
+  width: 30%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: var(--secondary-color); /* Light gray background */
+  border-radius: 8px; /* Rounded corners */
+  margin-right: 20px; /* Space between the profile and booking history */
+}
+
+/* Booking History section */
+.booking-history-container {
+  width: 70%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: var(--primary-color); /* White background */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.booking-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 40px; /* spacing from the top */
+}
+
+.booking-summary {
+  background-color: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+}
+
+.booking-summary img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.booking-summary ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+.booking-summary li {
+  margin-bottom: 10px;
+}
+
+.booking-summary strong {
+  color: #333;
 }

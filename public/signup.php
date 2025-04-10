@@ -1,8 +1,3 @@
-<?php
-session_start();
-$form_data = $_SESSION["form_data"] ?? []; // Retrieve session data
-unset($_SESSION["form_data"]); // Remove session after using
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,18 +7,16 @@ unset($_SESSION["form_data"]); // Remove session after using
     <title>Sign Up</title>
     <?php
     include("../includes/navbar.php");
+    $form_data = $_SESSION["form_data"] ?? []; // Retrieve session data
+    unset($_SESSION["form_data"]); // Remove session after using
     ?>
 </head>
 
 <body>
-    <ul style="list-style-type: none; margin: 0; padding: 0; overflow: hidden; background-color: #333;">
-        <li style="float: left;">
-            <a href="index.php" style="display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Home</a>
-        </li>
     </ul>
     <h1> Sign up </h1>
 
-    <form action="process-signup.php" method="POST" novalidate>
+    <form action="../includes/process-signup.php" method="POST" novalidate>
         <div>
             <label for="first-name">First Name:</label>
             <input type="text" id="first-name" name="first-name" required value="<?php echo htmlspecialchars($form_data["first-name"] ?? "") ?>">

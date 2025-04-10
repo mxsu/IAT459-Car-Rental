@@ -6,13 +6,13 @@ $conn = mysqli_connect($servername, $username, $password, $db);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
-echo "Connected successfully";
+// echo "Connected successfully";
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['car-code'] = $_POST['car-code'];
 } else {
-    echo " No POST data received from filter-cars.php.";
+    // echo " No POST data received from filter-cars.php.";
 }
 
 $carCode = $_SESSION['car-code'];
@@ -42,5 +42,5 @@ $car = mysqli_fetch_assoc($result);
 
 $_SESSION['car'] = $car;
 
-print_r($_SESSION['car']);
+// print_r($_SESSION['car']);
 mysqli_close($conn);

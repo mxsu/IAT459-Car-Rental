@@ -1,7 +1,3 @@
-<?php
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,33 +7,87 @@
     <title>Browse Cars</title>
     <link rel="stylesheet" href="../css/styles.css">
     <?php include("../includes/navbar.php"); ?>
+
 </head>
 
 <body class="column-50-50">
     <?php
+    require('../includes/reserve-car.php');
     $car = $_SESSION['car'];
-    print_r($car);
+    // print_r($car);
     ?>
-    <div class="grid-container">
-        <div class="grid-50">
-            <h3>Booking Details</h3>
+    <div class="grid-container-payment">
+        <!-- Left column with 3 cards -->
+        <div class="grid-50-payment">
+            <div class="card-payment">
+                <h3>Booking Details</h3>
+                <p>Location: <?php echo htmlspecialchars($_SESSION['location']); ?></p>
+                <p>Pickup Date: <?php echo htmlspecialchars($_SESSION['start-date']); ?></p>
+                <p>Return Date: <?php echo htmlspecialchars($_SESSION['end-date']); ?></p>
+                <p>Total Days: <?php echo htmlspecialchars($_SESSION['total-days']); ?></p>
+            </div>
+            <div class="card-payment">
+                <h3>Car Details</h3>
+                <?php if ($car) {
+                    // Display the car details
+                    echo "<h3>" . htmlspecialchars($car['Manufacturer']) . " " . htmlspecialchars($car['Model']) . "</h3>";
 
-            <p>Location: <?php echo htmlspecialchars($_SESSION['location']); ?></p>
-            <p>Pickup Date: <?php echo htmlspecialchars($_SESSION['start-date']); ?></p>
-            <p>Return Date: <?php echo htmlspecialchars($_SESSION['end-date']); ?></p>
-            <p>Total Days: <?php echo htmlspecialchars($_SESSION['total-days']); ?></p>
-            <p>Car Code: <?php echo htmlspecialchars($_SESSION['car-code']); ?></p>
-            <p>Manufacturer: <?php echo htmlspecialchars($car['Manufacturer']); ?></p>
-            <p>Model: <?php echo htmlspecialchars($car['Model']); ?></p>
-            <p>Seating: <?php echo htmlspecialchars($car['Seating']); ?></p>
-            <p>Fuel Type: <?php echo htmlspecialchars($car['Fuel Type']); ?></p>
-            <p>Daily Car Price: <?php echo htmlspecialchars($car['daily_price']); ?></p>
-            <p>Total Car Price: <?php echo htmlspecialchars($_SESSION['total-car-price']); ?></p>
-            <p>Insurance: <?php echo htmlspecialchars($_SESSION['coverage']); ?></p>
-            <p>Insurance Price: <?php echo htmlspecialchars($_SESSION['insurance-price']); ?></p>
-            <p>Total Price: $<?php echo htmlspecialchars($_SESSION['total-price'] = $_SESSION['total-car-price'] + $_SESSION['insurance-price']); ?></p>
+                    // Assuming you have a way to determine the car image (e.g., based on the car code)
+                    $image_path = "../images/default-car.jpg"; // Default image
+                    if (strpos($car['Car Code'], "Toyota_Corolla") !== false) {
+                        $image_path = "../images/toyota_corolla.png";
+                    } elseif (strpos($car['Car Code'], "Toyota_Prius") !== false) {
+                        $image_path = "../images/prius.jpg";
+                    } elseif (strpos($car['Car Code'], "Ford_Mustang") !== false) {
+                        $image_path = "../images/mustang.jpg";
+                    } elseif (strpos($car['Car Code'], "Dodge_Caravan") !== false) {
+                        $image_path = "../images/dodge_caravan.jpg";
+                    } elseif (strpos($car['Car Code'], "Toyota_Sienna") !== false) {
+                        $image_path = "../images/toyota_sienna.png";
+                    }elseif (strpos($car['Car Code'], "Ford_Escape") !== false) {
+                        $image_path = "../images/ford_escape.png";
+                    }elseif (strpos($car['Car Code'], "Ford_F150") !== false) {
+                        $image_path = "../images/fordf150.png";
+                    }elseif (strpos($car['Car Code'], "Ford_Transit") !== false) {
+                        $image_path = "../images/ford_transit.png";
+                    }elseif (strpos($car['Car Code'], "Volkswagen_Jetta") !== false) {
+                        $image_path = "../images/volkswagen_jetta.png";
+                    }elseif (strpos($car['Car Code'], "Ford_Focus") !== false) {
+                        $image_path = "../images/ford_focus.png";
+                    }elseif (strpos($car['Car Code'], "Hyundai_Ionic") !== false) {
+                        $image_path = "../images/ionic5.png";
+                    }elseif (strpos($car['Car Code'], "Ford_Lightning") !== false) {
+                        $image_path = "../images/ford_f150lightning.png";
+                    }elseif (strpos($car['Car Code'], "Nissan_Leaf") !== false) {
+                        $image_path = "../images/nissan_leaf.png";
+                    }
+                ?>
+                    <div class="car-details">
+                        <div class="car-info">
+                            <p>Seating: <?php echo htmlspecialchars($car['Seating']); ?></p>
+                            <p>Body Type: <?php echo htmlspecialchars($car['Body Type']); ?></p>
+                            <p>Fuel Type: <?php echo htmlspecialchars($car['Fuel Type']); ?></p>
+                            <p>Drive Train: <?php echo htmlspecialchars($car['Drive Train']); ?></p>
+                            <p>Daily Mileage Allowance: <?php echo htmlspecialchars($car['Mileage']); ?></p>
+                            <p>Daily Car Price: <?php echo htmlspecialchars($car['daily_price']); ?></p>
+                            <p><strong>Total Car Price:</strong> <?php echo htmlspecialchars($_SESSION['total-car-price']); ?></p>
+                        </div>
+                        <div class="car-image">
+                            <img src="<?php echo $image_path; ?>" alt="<?php echo htmlspecialchars($car['Model']); ?>" class="car-image-detail" style="width: 100%; height: auto;">
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+            <div class="card-payment">
+                <h3>Insurance</h3>
+                <p>Insurance: <?php echo htmlspecialchars($_SESSION['coverage']); ?></p>
+                <p>Insurance Price: <?php echo htmlspecialchars($_SESSION['insurance-price']); ?></p>
+                <p>Total Price: $<?php echo htmlspecialchars($_SESSION['total-price'] = $_SESSION['total-car-price'] + $_SESSION['insurance-price']); ?></p>
+            </div>
         </div>
-        <div class="grid-50">
+
+        <!-- Right column with form -->
+        <div class="grid-50-payment">
             <form action="../includes/payment-process.php" method="post">
                 <h3>Enter Your Details</h3>
                 <label for="first_name">First Name:</label>

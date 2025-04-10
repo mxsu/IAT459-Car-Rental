@@ -9,28 +9,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 //CHECK FORM FOR VALIDITY AND FILLED OUT
 if (empty($_POST["first-name"] || $_POST["last-name"])) {
-    header("Location: signup.php");
+    header("Location:../public/signup.php");
     die("Name is required");
 }
 if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-    header("Location: signup.php");
+    header("Location:../public/signup.php");
     die("Valid email is required");
 }
 if (strlen($_POST["password"]) < 8) {
-    header("Location: signup.php");
+    header("Location:../public/signup.php");
     die("Password must be at least 8 characters long");
 }
 if (! preg_match("/[a-z]/i", $_POST["password"])) {
-    header("Location: signup.php");
+    header("Location:../public/signup.php");
     die("Password must contain at least one letter");
 }
 if (! preg_match("/[0-9]/", $_POST["password"])) {
-    header("Location: signup.php");
+    header("Location:../public/signup.php");
     die("Password must contain at least one number");
 }
 
 if ($_POST["password"] !== $_POST["password_confirmation"]) {
-    header("Location: signup.php");
+    header("Location:../public/signup.php");
     die("Passwords do not match");
 }
 
@@ -38,7 +38,7 @@ $password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
 $role = "member";
 
-$mysqli = require("../includes/connect-db.php");
+$mysqli = require("connect-db.php");
 
 //EMAIL CHECK
 $sql_check = "SELECT email FROM `user` WHERE email = ?";
@@ -79,7 +79,7 @@ $stmt->bind_param(
 );
 
 if ($stmt->execute()) {
-    header("Location: signup-success.php");
+    header("Location:../public/signup-success.php");
     exit;
 } else {
     if ($mysqli->errno === 1062) {
