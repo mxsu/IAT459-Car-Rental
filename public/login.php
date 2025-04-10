@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $_SESSION["user_id"] = $user["user_id"];
             $_SESSION["email"] = $user["email"];
-            header("Location: index.php");
+            header("Location: profile.php");
             exit;
         }
     }

@@ -34,32 +34,30 @@
     $image_path = "../images/default-car.jpg";
     $carCode = $car['Car Code'] ?? ''; // Get car code safely
 
-    if (strpos($carCode, "Toyota_Corolla") !== false) {
-        $image_path = "../images/toyota-corolla-sedan-2019-520018.jpg";
-    } elseif (strpos($carCode, "Toyota_Prius") !== false) {
-        $image_path = "../images/prius.jpg";
-    } elseif (strpos($carCode, "Ford_Mustang") !== false) {
-        $image_path = "../images/mustang.jpg";
-    } elseif (strpos($carCode, "Dodge_Caravan") !== false) {
-        $image_path = "../images/dodge_caravan.jpg";
-    } elseif (strpos($carCode, "Toyota_Sienna") !== false) {
-        $image_path = "../images/toyota_sienna.png";
-    } elseif (strpos($carCode, "Ford_Escape") !== false) {
-        $image_path = "../images/ford_escape.png";
-    } elseif (strpos($carCode, "Ford_F150") !== false) {
-        $image_path = "../images/fordf150.png";
-    } elseif (strpos($carCode, "Ford_Transit") !== false) {
-        $image_path = "../images/ford_transit.png";
-    } elseif (strpos($carCode, "Volkswagen_Jetta") !== false) {
-        $image_path = "../images/volkswagen_jetta.png";
-    } elseif (strpos($carCode, "Ford_Focus") !== false) {
-        $image_path = "../images/ford_focus.png";
-    } elseif (strpos($carCode, "Hyundai_Ionic") !== false) {
-        $image_path = "../images/ionic5.png";
-    } elseif (strpos($carCode, "Ford_Lightning") !== false) {
-        $image_path = "../images/ford_f150lightning.png";
-    } elseif (strpos($carCode, "Nissan_Leaf") !== false) {
-        $image_path = "../images/nissan_leaf.png";
+    // Define a mapping array between car codes and image paths
+    $carImageMap = [
+        "Toyota_Corolla_2023" => "../images/toyota_corolla.png",
+        "Toyota_Prius_2023" => "../images/prius.jpg",
+        "Ford_Mustang_2020" => "../images/mustang.jpg",
+        "Dodge_Caravan_2023" => "../images/dodge_caravan.jpg",
+        "Toyota_Sienna_2023" => "../images/toyota_sienna.png",
+        "Ford_Escape_2025" => "../images/ford_escape.png",
+        "Ford_EscapeHybrid_2025" => "../images/ford_escape.png",
+        "Ford_F150_2020" => "../images/fordf150.png",
+        "Ford_Transit_2023" => "../images/ford_transit.png",
+        "Volkswagen_Jetta_2022" => "../images/volkswagen_jetta.png",
+        "Ford_Focus_2022" => "../images/ford_focus.png",
+        "Hyundai_Ionic5_2024" => "../images/ionic5.png",
+        "Ford_Lightning_2024" => "../images/ford_f150lightning.png",
+        "Nissan_Leaf_2024" => "../images/nissan_leaf.png",
+    ];
+
+    // Check each possible car code
+    foreach ($carImageMap as $code => $path) {
+        if (strpos($carCode, $code) !== false) {
+            $image_path = $path;
+            break; // Stop checking once we find a match
+        }
     }
 
     $car['Image'] = $image_path; // ✅ Set it for use in the HTML later

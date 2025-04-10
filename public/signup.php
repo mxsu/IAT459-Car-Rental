@@ -7,6 +7,7 @@
     <title>Sign Up</title>
     <?php
     include("../includes/navbar.php");
+    // include("../includes/process-signup.php");
     $form_data = $_SESSION["form_data"] ?? []; // Retrieve session data
     unset($_SESSION["form_data"]); // Remove session after using
     ?>

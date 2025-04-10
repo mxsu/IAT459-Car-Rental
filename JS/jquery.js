@@ -61,3 +61,44 @@ $(document).ready(function () {
     }
   });
 });
+
+$(document).ready(function() {
+  function fetchCars(limit = 4) {
+      let formData = $("#filter-form").serialize() + "&limit=" + limit;
+
+      $.ajax({
+          type: "POST",
+          url: "filter-cars.php",
+          data: formData,
+          success: function(response) {
+              $(".right-content").html(response);
+
+              // Re-bind click after new content is loaded
+              $(".pagination-btn").on("click", function() {
+                  const page = $(this).data("page");
+                  $("#page-number").val(page); // update hidden input
+                  fetchCars(); // re-fetch with new page number
+              });
+          },
+          error: function() {
+              alert("Failed to retrieve cars. Please try again.");
+          },
+      });
+  }
+
+  // Fetch cars on page load
+  fetchCars();
+
+  // Fetch cars when filters are submitted
+  $("#filter-form").submit(function(event) {
+      event.preventDefault();
+      $("#page-number").val(1); // reset to page 1
+      fetchCars();
+  });
+
+  // Fetch cars when the search bar value changes (live search)
+  $("#search-bar").on("input", function() {
+      $("#page-number").val(1); // reset to page 1
+      fetchCars(); // re-fetch with new search term
+  });
+});

@@ -35,7 +35,7 @@
                     // Assuming you have a way to determine the car image (e.g., based on the car code)
                     $image_path = "../images/default-car.jpg"; // Default image
                     if (strpos($car['Car Code'], "Toyota_Corolla") !== false) {
-                        $image_path = "../images/toyota-corolla-sedan-2019-520018.jpg";
+                        $image_path = "../images/toyota_corolla.png";
                     } elseif (strpos($car['Car Code'], "Toyota_Prius") !== false) {
                         $image_path = "../images/prius.jpg";
                     } elseif (strpos($car['Car Code'], "Ford_Mustang") !== false) {
@@ -44,6 +44,22 @@
                         $image_path = "../images/dodge_caravan.jpg";
                     } elseif (strpos($car['Car Code'], "Toyota_Sienna") !== false) {
                         $image_path = "../images/toyota_sienna.png";
+                    }elseif (strpos($car['Car Code'], "Ford_Escape") !== false) {
+                        $image_path = "../images/ford_escape.png";
+                    }elseif (strpos($car['Car Code'], "Ford_F150") !== false) {
+                        $image_path = "../images/fordf150.png";
+                    }elseif (strpos($car['Car Code'], "Ford_Transit") !== false) {
+                        $image_path = "../images/ford_transit.png";
+                    }elseif (strpos($car['Car Code'], "Volkswagen_Jetta") !== false) {
+                        $image_path = "../images/volkswagen_jetta.png";
+                    }elseif (strpos($car['Car Code'], "Ford_Focus") !== false) {
+                        $image_path = "../images/ford_focus.png";
+                    }elseif (strpos($car['Car Code'], "Hyundai_Ionic") !== false) {
+                        $image_path = "../images/ionic5.png";
+                    }elseif (strpos($car['Car Code'], "Ford_Lightning") !== false) {
+                        $image_path = "../images/ford_f150lightning.png";
+                    }elseif (strpos($car['Car Code'], "Nissan_Leaf") !== false) {
+                        $image_path = "../images/nissan_leaf.png";
                     }
                 ?>
                     <div class="car-details">

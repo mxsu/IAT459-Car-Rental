@@ -77,7 +77,7 @@ if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $image_path = "../images/default-car.jpg"; // Default image
         if (strpos($row['Car Code'], "Toyota_Corolla") !== false) {
-            $image_path = "../images/toyota-corolla-sedan-2019-520018.jpg";
+            $image_path = "../images/toyota_corolla.png";
         } elseif (strpos($row['Car Code'], "Toyota_Prius") !== false) {
             $image_path = "../images/prius.jpg";
         } elseif (strpos($row['Car Code'], "Ford_Mustang") !== false) {
@@ -103,7 +103,6 @@ if (mysqli_num_rows($result) > 0) {
         }elseif (strpos($row['Car Code'], "Nissan_Leaf") !== false) {
             $image_path = "../images/nissan_leaf.png";
         }
-
         echo "
         <div class='card'>
             <img src='$image_path' alt='Card Image'>

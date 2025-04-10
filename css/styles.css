@@ -110,7 +110,7 @@ input[type="checkbox"]:checked + label::after {
 .card img {
   width: 300px; /* Set a consistent width for the images */
   height: auto; /* Ensure the image takes up the full height of the card */
-  object-fit: cover; /* Make sure the image covers the entire area without stretching */
+  object-fit: contain; /* Make sure the image covers the entire area without stretching */
 }
 
 .card-content {
