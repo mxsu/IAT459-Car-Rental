@@ -20,70 +20,41 @@
                 // Display the car details
                 echo "<h2>" . "Selected Car" . "</h2>";
                 echo "<h3>" . htmlspecialchars($car['Manufacturer']) . " " . htmlspecialchars($car['Model']) . "</h3>";
-                
-                // Assuming you have a way to determine the car image (e.g., based on the car code)
-                // $image_path = "../images/default-car.jpg"; // Default image
-                // if (strpos($car['Car Code'], "Toyota_Corolla") !== false) {
-                //     $image_path = "../images/toyota_corolla.png";
-                // } elseif (strpos($car['Car Code'], "Toyota_Prius") !== false) {
-                //     $image_path = "../images/prius.jpg";
-                // } elseif (strpos($car['Car Code'], "Ford_Mustang") !== false) {
-                //     $image_path = "../images/mustang.jpg";
-                // } elseif (strpos($car['Car Code'], "Dodge_Caravan") !== false) {
-                //     $image_path = "../images/dodge_caravan.jpg";
-                // } elseif (strpos($car['Car Code'], "Toyota_Sienna") !== false) {
-                //     $image_path = "../images/toyota_sienna.png";
-                // }elseif (strpos($car['Car Code'], "Ford_Escape") !== false) {
-                //     $image_path = "../images/ford_escape.png";
-                // }elseif (strpos($car['Car Code'], "Ford_F150") !== false) {
-                //     $image_path = "../images/fordf150.png";
-                // }elseif (strpos($car['Car Code'], "Ford_Transit") !== false) {
-                //     $image_path = "../images/ford_transit.png";
-                // }elseif (strpos($car['Car Code'], "Volkswagen_Jetta") !== false) {
-                //     $image_path = "../images/volkswagen_jetta.png";
-                // }elseif (strpos($car['Car Code'], "Ford_Focus") !== false) {
-                //     $image_path = "../images/ford_focus.png";
-                // }elseif (strpos($car['Car Code'], "Hyundai_Ionic") !== false) {
-                //     $image_path = "../images/ionic5.png";
-                // }elseif (strpos($car['Car Code'], "Ford_Lightning") !== false) {
-                //     $image_path = "../images/ford_f150lightning.png";
-                // }elseif (strpos($car['Car Code'], "Nissan_Leaf") !== false) {
-                //     $image_path = "../images/nissan_leaf.png";
-                // }
-        $image_path = "../images/default-car.jpg";
-        $carCode = $car['Car Code'] ?? ''; // Get car code safely
 
-        // Define a mapping array between car codes and image paths
-        $carImageMap = [
-            "Toyota_Corolla_2023" => "../images/toyota_corolla.png",
-            "Toyota_Prius_2023" => "../images/prius.jpg",
-            "Ford_Mustang_2020" => "../images/mustang.jpg",
-            "Dodge_Caravan_2023" => "../images/dodge_caravan.jpg",
-            "Toyota_Sienna_2023" => "../images/toyota_sienna.png",
-            "Ford_Escape_2025" => "../images/ford_escape.png",
-            "Ford_EscapeHybrid_2025" => "../images/ford_escape.png",
-            "Ford_F150_2020" => "../images/fordf150.png",
-            "Ford_Transit_2023" => "../images/ford_transit.png",
-            "Volkswagen_Jetta_2022" => "../images/volkswagen_jetta.png",
-            "Ford_Focus_2022" => "../images/ford_focus.png",
-            "Hyundai_Ionic5_2024" => "../images/ionic5.png",
-            "Ford_Lightning_2024" => "../images/ford_f150lightning.png",
-            "Nissan_Leaf_2024" => "../images/nissan_leaf.png",
-        ];
+                $image_path = "../images/default-car.jpg";
+                $carCode = $car['Car Code'] ?? ''; // Get car code safely
 
-        // Check each possible car code
-        foreach ($carImageMap as $code => $path) {
-            if (strpos($carCode, $code) !== false) {
-                $image_path = $path;
-                break; // Stop checking once we find a match
-            }
-        }
+                // Define a mapping array between car codes and image paths
+                $carImageMap = [
+                    "Toyota_Corolla_2023" => "../images/toyota_corolla.png",
+                    "Toyota_Prius_2023" => "../images/prius.jpg",
+                    "Ford_Mustang_2020" => "../images/mustang.jpg",
+                    "Dodge_Caravan_2023" => "../images/dodge_caravan.jpg",
+                    "Toyota_Sienna_2023" => "../images/toyota_sienna.png",
+                    "Ford_Escape_2025" => "../images/ford_escape.png",
+                    "Ford_EscapeHybrid_2025" => "../images/ford_escape.png",
+                    "Ford_F150_2020" => "../images/fordf150.png",
+                    "Ford_Transit_2023" => "../images/ford_transit.png",
+                    "Volkswagen_Jetta_2022" => "../images/volkswagen_jetta.png",
+                    "Ford_Focus_2022" => "../images/ford_focus.png",
+                    "Hyundai_Ionic5_2024" => "../images/ionic5.png",
+                    "Ford_Lightning_2024" => "../images/ford_f150lightning.png",
+                    "Nissan_Leaf_2024" => "../images/nissan_leaf.png",
+                ];
 
-        // $car['Image'] = $image_path; 
+                // Check each possible car code
+                foreach ($carImageMap as $code => $path) {
+                    if (strpos($carCode, $code) !== false) {
+                        $image_path = $path;
+                        break; // Stop checking once we find a match
+                    }
+                }
+
+                // $car['Image'] = $image_path; 
 
                 // Display the image
                 echo "<img src='$image_path' alt='" . htmlspecialchars($car['Model']) . "' class='car-image-detail'>";
-               
+
                 // Car details in two columns
                 echo "<div class='car-details-detail'>";
                 echo "<div class='car-detail'>";
